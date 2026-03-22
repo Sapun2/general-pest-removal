@@ -17,7 +17,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /general-pest-removal/admin/blogs'); exit;
+        header('Location: /admin/blogs'); exit;
     }
     $id = (int)($_POST['id'] ?? 0);
     if ($_POST['action'] === 'toggle' && $id) {
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $pdo) {
             $_SESSION['flash_success'] = 'Post deleted.';
         } catch (PDOException $e) { $_SESSION['flash_error'] = 'Delete failed.'; }
     }
-    header('Location: /general-pest-removal/admin/blogs'); exit;
+    header('Location: /admin/blogs'); exit;
 }
 
 $posts = [];
@@ -48,7 +48,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
 <div class="max-w-5xl mx-auto">
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-2xl font-bold text-gray-900">Blog Posts</h1>
-        <a href="/general-pest-removal/admin/blogs/edit"
+        <a href="/admin/blogs/edit"
            class="bg-accent hover:bg-orange-700 text-white font-bold px-5 py-2.5 rounded-lg transition flex items-center gap-2">
             <i class="fa-solid fa-plus"></i> New Post
         </a>
@@ -70,7 +70,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         <div class="px-6 py-12 text-center text-gray-400">
             <i class="fa-solid fa-newspaper text-4xl mb-3 block"></i>
             <p class="mb-4">No blog posts yet.</p>
-            <a href="/general-pest-removal/admin/blogs/edit" class="bg-primary text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-900 transition">Create First Post</a>
+            <a href="/admin/blogs/edit" class="bg-primary text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-900 transition">Create First Post</a>
         </div>
         <?php else: ?>
         <table class="w-full text-sm">
@@ -99,8 +99,8 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     <td class="px-4 py-3 text-gray-400 text-xs whitespace-nowrap"><?= date('M j, Y', strtotime($p['created_at'])) ?></td>
                     <td class="px-4 py-3">
                         <div class="flex items-center gap-2 flex-wrap">
-                            <a href="/general-pest-removal/admin/blogs/edit?id=<?= $p['id'] ?>" class="text-primary hover:underline text-xs font-bold">Edit</a>
-                            <a href="/general-pest-removal/blog/<?= htmlspecialchars($p['slug']) ?>" target="_blank" class="text-gray-400 hover:text-primary text-xs">View</a>
+                            <a href="/admin/blogs/edit?id=<?= $p['id'] ?>" class="text-primary hover:underline text-xs font-bold">Edit</a>
+                            <a href="/blog/<?= htmlspecialchars($p['slug']) ?>" target="_blank" class="text-gray-400 hover:text-primary text-xs">View</a>
                             <form method="POST" class="inline">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
                                 <input type="hidden" name="action" value="toggle">

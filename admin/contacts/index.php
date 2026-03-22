@@ -17,7 +17,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id']) && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /general-pest-removal/admin/contacts'); exit;
+        header('Location: /admin/contacts'); exit;
     }
     $id     = (int)$_POST['id'];
     $action = $_POST['action'];
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
             $pdo->prepare("UPDATE contacts SET status = 'read' WHERE id = ?")->execute([$id]);
             $_SESSION['flash_success'] = 'Message marked as read.';
         } catch (PDOException $e) { $_SESSION['flash_error'] = 'Update failed.'; }
-        header('Location: /general-pest-removal/admin/contacts?view=' . $id);
+        header('Location: /admin/contacts?view=' . $id);
         exit;
     }
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
             $pdo->prepare("UPDATE contacts SET status = 'unread' WHERE id = ?")->execute([$id]);
             $_SESSION['flash_success'] = 'Message marked as unread.';
         } catch (PDOException $e) { $_SESSION['flash_error'] = 'Update failed.'; }
-        header('Location: /general-pest-removal/admin/contacts');
+        header('Location: /admin/contacts');
         exit;
     }
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
             $pdo->prepare("DELETE FROM contacts WHERE id = ?")->execute([$id]);
             $_SESSION['flash_success'] = 'Message deleted.';
         } catch (PDOException $e) { $_SESSION['flash_error'] = 'Delete failed.'; }
-        header('Location: /general-pest-removal/admin/contacts');
+        header('Location: /admin/contacts');
         exit;
     }
 }
@@ -133,7 +133,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
     <?php if ($viewing): ?>
     <!-- ── Single Message View ───────────────────────────────── -->
     <div class="mb-6">
-        <a href="/general-pest-removal/admin/contacts" class="text-sm text-gray-400 hover:text-primary flex items-center gap-1 mb-4 w-fit">
+        <a href="/admin/contacts" class="text-sm text-gray-400 hover:text-primary flex items-center gap-1 mb-4 w-fit">
             <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to All Messages
         </a>
         <div class="bg-white rounded-xl shadow-sm p-6">
@@ -216,7 +216,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         </div>
         <button type="submit" class="bg-primary text-white font-bold px-5 py-2 rounded-lg text-sm hover:bg-blue-900 transition">Filter</button>
         <?php if ($filter_status || $search): ?>
-        <a href="/general-pest-removal/admin/contacts" class="text-sm text-gray-400 hover:text-gray-700 py-2">Clear</a>
+        <a href="/admin/contacts" class="text-sm text-gray-400 hover:text-gray-700 py-2">Clear</a>
         <?php endif; ?>
     </form>
 

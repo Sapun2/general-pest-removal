@@ -104,7 +104,7 @@ try {
               <tr><td style="padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;font-weight:600;">Message</td><td style="padding:8px 12px;border:1px solid #e2e8f0;">' . nl2br(htmlspecialchars($data['message'])) . '</td></tr>
             </table>
             <p style="margin-top:20px;">
-              <a href="' . $site_url . '/general-pest-removal/admin/bookings" style="background:#1e3a8a;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">View in Admin Panel</a>
+              <a href="' . $site_url . '/admin/bookings" style="background:#1e3a8a;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">View in Admin Panel</a>
             </p>',
             $biz_name
         );

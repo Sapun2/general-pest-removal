@@ -32,7 +32,7 @@ if ($pdo) {
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 <div class="w-full max-w-xl">
     <div class="text-center mb-8">
-        <a href="/general-pest-removal/" class="inline-flex items-center gap-2 text-2xl font-black text-primary">
+        <a href="/" class="inline-flex items-center gap-2 text-2xl font-black text-primary">
             <i class="fa-solid fa-bug text-secondary text-3xl"></i>
             <span>General<span class="text-secondary">Pest</span> — DB Setup</span>
         </a>
@@ -52,7 +52,7 @@ if ($pdo) {
             <strong>Default credentials:</strong> username <code>admin</code> / password <code>admin123</code><br>
             Change the password after first login for security.
         </div>
-        <a href="/general-pest-removal/admin/login" class="block w-full text-center bg-primary hover:bg-blue-900 text-white font-bold py-3 rounded-lg transition">
+        <a href="/admin/login" class="block w-full text-center bg-primary hover:bg-blue-900 text-white font-bold py-3 rounded-lg transition">
             Go to Admin Login →
         </a>
         <?php else: ?>

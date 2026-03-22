@@ -36,7 +36,7 @@ if (isset($_GET['clear']) && isset($_GET['edit']) && $pdo) {
             $_SESSION['flash_error'] = 'Could not clear overrides: ' . htmlspecialchars($e->getMessage());
         }
     }
-    header('Location: /general-pest-removal/admin/seo?edit=' . $page_key);
+    header('Location: /admin/seo?edit=' . $page_key);
     exit;
 }
 
@@ -44,7 +44,7 @@ if (isset($_GET['clear']) && isset($_GET['edit']) && $pdo) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['page_key'])) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /general-pest-removal/admin/seo'); exit;
+        header('Location: /admin/seo'); exit;
     }
     $page_key = preg_replace('/[^a-z0-9_-]/', '', $_POST['page_key']);
     if (isset($managed_pages[$page_key])) {
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['page_key'])) {
         } else {
             $_SESSION['flash_error'] = 'Failed to save. Check database connection.';
         }
-        header('Location: /general-pest-removal/admin/seo?edit=' . $page_key);
+        header('Location: /admin/seo?edit=' . $page_key);
         exit;
     }
 }

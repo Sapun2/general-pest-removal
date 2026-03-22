@@ -49,7 +49,7 @@ function handle_image_upload_svc(string $field_name, string $upload_dir): string
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /general-pest-removal/admin/services'); exit;
+        header('Location: /admin/services'); exit;
     }
 
     $upload_dir   = BASE_DIR . '/assets/images/uploads';
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
                 $stmt->execute($data);
                 $new_id = $pdo->lastInsertId();
                 $_SESSION['flash_success'] = 'Service created successfully.';
-                header("Location: /general-pest-removal/admin/services/edit?id={$new_id}&saved=1");
+                header("Location: /admin/services/edit?id={$new_id}&saved=1");
                 exit;
             }
         } catch (PDOException $e) {
@@ -146,7 +146,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
 <main class="flex-grow p-8">
 <div class="max-w-4xl mx-auto">
     <div class="flex items-center gap-4 mb-8">
-        <a href="/general-pest-removal/admin/services" class="text-gray-400 hover:text-primary transition">
+        <a href="/admin/services" class="text-gray-400 hover:text-primary transition">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         <h1 class="text-2xl font-bold text-gray-900"><?= $is_edit ? 'Edit Service' : 'New Service' ?></h1>
@@ -377,7 +377,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         </div>
 
         <div class="flex justify-between">
-            <a href="/general-pest-removal/admin/services" class="text-gray-400 hover:text-gray-600 py-2.5 transition">← Back to Services</a>
+            <a href="/admin/services" class="text-gray-400 hover:text-gray-600 py-2.5 transition">← Back to Services</a>
             <button type="submit" class="bg-primary hover:bg-blue-900 text-white font-bold px-10 py-2.5 rounded-lg transition">
                 <?= $is_edit ? 'Save Changes' : 'Create Service' ?>
             </button>
