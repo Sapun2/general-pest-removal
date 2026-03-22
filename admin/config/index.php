@@ -159,7 +159,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
     </div>
 
     <?php if ($flash_success): ?>
-    <div class="bg-yellow-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+    <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
         <i class="fa-solid fa-check-circle"></i> <?= htmlspecialchars($flash_success) ?>
     </div>
     <?php endif; ?>
@@ -254,8 +254,8 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1.5">Primary Text</label>
                         <input type="text" name="logo_text_primary"
-                               value="<?= htmlspecialchars($c('logo_text_primary', 'Sydney')) ?>"
-                               placeholder="Sydney"
+                               value="<?= htmlspecialchars($c('logo_text_primary', 'General')) ?>"
+                               placeholder="General"
                                class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none text-sm transition">
                     </div>
                     <div>
@@ -273,7 +273,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                             <i class="fa-solid <?= htmlspecialchars($c('logo_icon', 'fa-bug')) ?> text-white text-sm" id="preview-icon-i"></i>
                         </div>
                         <span class="text-xl font-bold text-dark tracking-tight">
-                            <span id="preview-primary"><?= htmlspecialchars($c('logo_text_primary', 'Sydney')) ?></span><span class="text-primary" id="preview-secondary"><?= htmlspecialchars($c('logo_text_secondary', 'Pest')) ?></span>
+                            <span id="preview-primary"><?= htmlspecialchars($c('logo_text_primary', 'General')) ?></span><span class="text-primary" id="preview-secondary"><?= htmlspecialchars($c('logo_text_secondary', 'Pest')) ?></span>
                         </span>
                     </div>
                 </div>
@@ -594,7 +594,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         <div class="border-t border-gray-100 px-6 py-5">
             <p class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-3">Send a Test Email</p>
             <?php if ($test_result === 'success'): ?>
-            <div class="bg-yellow-50 border border-green-200 text-green-800 text-sm px-4 py-3 rounded-lg mb-3 flex items-center gap-2">
+            <div class="bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-3 rounded-lg mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-check-circle"></i> Test email sent successfully! Check your inbox.
             </div>
             <?php elseif ($test_result === 'error'): ?>

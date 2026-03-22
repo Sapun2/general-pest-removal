@@ -151,7 +151,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         </div>
 
         <?php if ($success): ?>
-        <div class="bg-yellow-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
             <i class="fa-solid fa-check-circle"></i> <?= htmlspecialchars($success) ?>
         </div>
         <?php endif; ?>

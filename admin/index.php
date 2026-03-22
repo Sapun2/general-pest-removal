@@ -51,7 +51,7 @@ $recent_contacts = [];
 if ($pdo) {
     try {
         $recent_contacts = $pdo->query(
-            "SELECT id, name, email, subject, status, created_at FROM contacts ORDER BY created_at DESC LIMIT 6"
+            "SELECT id, name, email, status, created_at FROM contacts ORDER BY created_at DESC LIMIT 6"
         )->fetchAll();
     } catch (PDOException $e) { /* ignore */ }
 }
@@ -117,7 +117,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
     <div class="px-8 py-7 max-w-7xl mx-auto space-y-7">
 
         <?php if ($flash_success): ?>
-        <div class="bg-yellow-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl flex items-center gap-2 text-sm">
+        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl flex items-center gap-2 text-sm">
             <i class="fa-solid fa-circle-check text-green-500" aria-hidden="true"></i>
             <?= htmlspecialchars($flash_success) ?>
         </div>

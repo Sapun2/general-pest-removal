@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="text-center mb-8">
         <a href="/general-pest-removal/" class="inline-flex items-center gap-2 text-2xl font-black text-primary">
             <i class="fa-solid fa-bug text-secondary text-3xl"></i>
-            <span>Sydney<span class="text-secondary">Pest</span> Admin</span>
+            <span>General<span class="text-secondary">Pest</span> Admin</span>
         </a>
     </div>
     <div class="bg-white rounded-2xl shadow-xl p-8">

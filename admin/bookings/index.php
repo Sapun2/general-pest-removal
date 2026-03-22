@@ -126,7 +126,7 @@ $status_classes = [
     <h1 class="text-2xl font-bold text-gray-900 mb-6">Bookings</h1>
 
     <?php if ($flash_success): ?>
-    <div class="bg-yellow-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+    <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
         <i class="fa-solid fa-check-circle" aria-hidden="true"></i> <?= htmlspecialchars($flash_success) ?>
     </div>
     <?php endif; ?>

@@ -92,7 +92,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
     <p class="text-gray-500 text-sm mb-6">Override meta title, description, and Open Graph tags per page. Leave blank to use each page's built-in defaults.</p>
 
     <?php if ($flash_success): ?>
-    <div class="bg-yellow-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+    <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
         <i class="fa-solid fa-check-circle" aria-hidden="true"></i> <?= $flash_success ?>
     </div>
     <?php endif; ?>

@@ -17,7 +17,7 @@ if ($_a_logo_type === 'image' && !empty($_asc['logo_image_url'])) {
         : $base . $_asc['logo_image_url'];
 }
 $_a_logo_icon       = $_asc['logo_icon']           ?? 'fa-bug';
-$_a_logo_primary    = $_asc['logo_text_primary']   ?? 'Sydney';
+$_a_logo_primary    = $_asc['logo_text_primary']   ?? 'General';
 $_a_logo_secondary  = $_asc['logo_text_secondary'] ?? 'Pest';
 
 $nav_items = [

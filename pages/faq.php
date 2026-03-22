@@ -5,31 +5,29 @@ require_once BASE_DIR . '/includes/seo-meta.php';
 $faqs = [
     'Termite Inspections' => [
         ['icon' => 'fa-camera', 'q' => 'How often should I get a termite inspection in Sydney or Brisbane?',
-         'a' => 'Australian Standard AS 3660.2 recommends annual termite inspections for all properties. In high-risk areas — particularly older homes with timber subfloors or homes near bushland in Sydney and Brisbane — we recommend inspections every 6 months. Both NSW and QLD have high termite damage claims, and most home insurance policies do not cover termite damage.'],
+         'a' => 'Australian Standard AS 3660.2 recommends annual termite inspections for all properties. In high-risk areas — particularly older homes with timber subfloors or homes near bushland — we recommend inspections every 6 months. Both NSW and QLD have high termite damage claims, and most home insurance policies do not cover termite damage.'],
         ['icon' => 'fa-house-crack', 'q' => 'Will termite treatments damage my home?',
-         'a' => 'Our preferred inspection method is thermal imaging, which is completely non-invasive — no drilling, no destructive testing. Chemical barrier treatments are applied to the soil around your perimeter, not your structure. All our treatments comply with Australian Standard AS 3660.1 and are applied by licensed technicians.'],
+         'a' => 'Our preferred inspection method is thermal imaging, which is completely non-invasive — no drilling, no destructive testing. Chemical barrier treatments are applied to the soil around your perimeter, not your structure. All treatments comply with Australian Standard AS 3660.1 and are applied by licensed technicians.'],
         ['icon' => 'fa-file-contract', 'q' => 'Do you provide compliant termite inspection reports?',
-         'a' => 'Yes. Every inspection includes a full written report compliant with AS 3660.2, documenting all findings, risk ratings, conducive conditions, and recommendations. This report is required by most lenders and conveyancers for property transactions across NSW and QLD and is essential for insurance documentation.'],
+         'a' => 'Yes. Every inspection includes a full written report compliant with AS 3660.2, documenting all findings, risk ratings, conducive conditions, and recommendations. This report is required by most lenders and conveyancers for property transactions across NSW and QLD.'],
     ],
     'Cockroach & Spider Control' => [
         ['icon' => 'fa-bug', 'q' => 'Why are cockroaches so hard to control in Sydney and Brisbane?',
-         'a' => 'Australia\'s subtropical climate provides cockroaches with year-round warmth and humidity across both Sydney and Brisbane. German cockroaches thrive in kitchens and bathrooms, while American cockroaches prefer subfloor voids and drains. Over-the-counter sprays cause colonies to scatter and hide, making the problem worse. Professional gel baiting targets the colony at its harborage zones — the only consistently effective method.'],
+         'a' => 'Australia\'s subtropical climate provides cockroaches with year-round warmth and humidity. German cockroaches thrive in kitchens and bathrooms, while American cockroaches prefer subfloor voids and drains. Over-the-counter sprays cause colonies to scatter and hide, making the problem worse. Professional gel baiting targets the colony at its harborage zones — the only consistently effective method.'],
         ['icon' => 'fa-spider', 'q' => 'Which spiders in Sydney and Brisbane are dangerous?',
-         'a' => 'The most medically significant species in Sydney and Brisbane include the Redback Spider (found in dry sheltered areas like letterboxes and garden furniture), the Eastern Funnel-web Spider (bushland fringe suburbs), and the White-tailed Spider. We recommend professional treatment whenever Redbacks are found near play areas, sandpits, or entry points.'],
+         'a' => 'The most medically significant species include the Redback Spider (found in dry sheltered areas like letterboxes and garden furniture), the Eastern Funnel-web Spider (bushland fringe suburbs), and the White-tailed Spider. We recommend professional treatment whenever Redbacks are found near play areas, sandpits, or entry points.'],
         ['icon' => 'fa-clock', 'q' => 'How long do spider and cockroach treatments last?',
-         'a' => 'Interior cockroach gel bait treatments typically remain effective for 3 months. Exterior spider webbing spray treatments last 3–6 months depending on weather exposure. We recommend a combined general pest treatment (cockroaches, spiders, ants, silverfish) every 12 months for comprehensive year-round protection.'],
+         'a' => 'Interior cockroach gel bait treatments typically remain effective for 3 months. Exterior spider webbing spray treatments last 3–6 months depending on weather exposure. We recommend a combined general pest treatment every 12 months for comprehensive year-round protection.'],
     ],
     'General Questions' => [
         ['icon' => 'fa-bolt', 'q' => 'How quickly can you respond to a pest emergency in Sydney or Brisbane?',
-         'a' => 'We aim to respond to all inquiries within 2 hours during business hours. For genuine pest emergencies, we offer same-day appointments across Sydney CBD, North Shore, Parramatta, Hills District, Sutherland Shire, Eastern Suburbs, Brisbane CBD, Southside Brisbane, North Brisbane, and surrounds. After-hours emergency call-outs are available for severe infestations.'],
+         'a' => 'We aim to respond to all inquiries within 2 hours during business hours. For genuine pest emergencies, we offer same-day appointments across Sydney CBD, North Shore, Parramatta, Hills District, Sutherland Shire, Eastern Suburbs, Brisbane CBD, Southside Brisbane, North Brisbane, and surrounds.'],
         ['icon' => 'fa-baby', 'q' => 'Are your treatments safe for children and pets?',
          'a' => 'Safety is our top priority. All our products are APVMA-registered and applied according to label specifications. We provide clearly defined re-entry periods (typically 2–4 hours for interior sprays). For families with infants, pregnant women, or sensitive pets, we offer low-toxicity options and will always discuss these before every treatment.'],
         ['icon' => 'fa-leaf', 'q' => 'Do you offer eco-friendly pest control options?',
-         'a' => 'Yes. Our Integrated Pest Management approach prioritises non-chemical methods first — exclusion, habitat modification, and physical trapping. For termites, we offer reticulation systems with reduced-chemical-application profiles. When products are required, we select the lowest-risk, most targeted APVMA-registered options available.'],
+         'a' => 'Yes. Our Integrated Pest Management approach prioritises non-chemical methods first — exclusion, habitat modification, and physical trapping. When products are required, we select the lowest-risk, most targeted APVMA-registered options available.'],
         ['icon' => 'fa-map-location-dot', 'q' => 'What areas of Sydney and Brisbane do you service?',
-         'a' => 'We service all of Greater Sydney including Sydney CBD, North Shore, Inner West, Parramatta, Hills District, Sutherland Shire, and the Eastern Suburbs. In Brisbane, we cover Brisbane CBD, Southside (Sunnybank, Carindale, Eight Mile Plains), North Brisbane (Chermside, Aspley, Albany Creek), Eastern Brisbane, Western Brisbane, Logan, and Ipswich. Contact us for areas not listed — we can often accommodate.'],
-        ['icon' => 'fa-key', 'q' => 'Do I need to be home during the treatment?',
-         'a' => 'For most interior treatments, an adult must be present to provide access and sign the service agreement. For exterior-only services (perimeter spray, webbing treatment, termite barriers), we can arrange keyless access by prior arrangement. We provide a full pre-treatment checklist so you know exactly what to expect and how long to vacate.'],
+         'a' => 'We service all of Greater Sydney including CBD, North Shore, Inner West, Parramatta, Hills District, Sutherland Shire, and Eastern Suburbs. In Brisbane, we cover Brisbane CBD, Southside, North Brisbane, Eastern Brisbane, Western Brisbane, Logan, and Ipswich. Contact us for areas not listed.'],
     ],
     'Ant & Rodent Control' => [
         ['icon' => 'fa-circle-dot', 'q' => 'What should I do if I think I have Fire Ants?',
@@ -60,105 +58,82 @@ $page_seo = get_page_seo('faq', [
 require_once BASE_DIR . '/includes/header.php';
 ?>
 
-<main class="flex-grow bg-gray-50">
+<main class="flex-grow bg-white">
 
-    <!-- ═══════════════════════════════════════════════════════
-         HERO
-    ══════════════════════════════════════════════════════════ -->
-    <section class="bg-dark text-white py-16 md:py-24 relative overflow-hidden">
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ── HERO ─────────────────────────────────────────────────── -->
+    <section class="bg-dark text-white py-16 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav aria-label="Breadcrumb" class="mb-8">
-                <ol class="flex items-center gap-2 text-xs text-gray-400">
-                    <li><a href="<?= $base_url ?>/" class="hover:text-white transition">Home</a></li>
-                    <li aria-hidden="true" class="text-gray-600">/</li>
-                    <li aria-current="page" class="text-white font-medium">FAQ</li>
+                <ol class="flex items-center gap-2 text-xs text-slate-500">
+                    <li><a href="<?= $base_url ?>/" class="hover:text-slate-300 transition">Home</a></li>
+                    <li aria-hidden="true" class="text-slate-700">/</li>
+                    <li aria-current="page" class="text-slate-300">FAQ</li>
                 </ol>
             </nav>
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="inline-flex items-center gap-2 bg-secondary/20 border border-secondary/30 rounded-full px-4 py-1.5 mb-5">
-                        <i class="fa-solid fa-circle-question text-secondary text-xs" aria-hidden="true"></i>
-                        <span class="text-secondary text-xs font-semibold uppercase tracking-wide">Knowledge Base</span>
-                    </div>
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-5 leading-tight">
-                        Common Pest Control<br>
-                        <span class="text-secondary">Questions Answered</span>
-                    </h1>
-                    <p class="text-gray-300 leading-relaxed mb-6 text-lg">
-                        Real answers about termite inspections, cockroach control, spider removal, treatment safety, and everything in between.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <?php foreach (array_keys($faqs) as $category): ?>
-                        <a href="#<?= htmlspecialchars(strtolower(preg_replace('/[^a-z0-9]+/i', '-', $category))) ?>"
-                           class="text-xs font-medium bg-white/10 hover:bg-white/20 border border-white/15 text-white px-3 py-1.5 rounded-full transition">
-                            <?= htmlspecialchars($category) ?>
-                        </a>
-                        <?php endforeach; ?>
-                    </div>
+            <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-2 bg-green-600/15 border border-green-500/20 rounded-full px-4 py-1.5 mb-5">
+                    <i class="fa-solid fa-circle-question text-green-400 text-xs" aria-hidden="true"></i>
+                    <span class="text-green-400 text-xs font-semibold uppercase tracking-wide">Knowledge Base</span>
                 </div>
-                <!-- Trust callout -->
-                <div class="grid grid-cols-2 gap-4">
-                    <?php
-                    $faq_trust = [
-                        ['fa-shield-halved', 'text-secondary', 'Service Reports',     'On every job'],
-                        ['fa-bolt',          'text-yellow-400','2-Hour Response',      'Business hours'],
-                        ['fa-leaf',          'text-secondary', 'Eco-Friendly Options', 'Always available'],
-                        ['fa-certificate',   'text-secondary', 'Licensed',        'Every tech certified'],
-                    ];
-                    foreach ($faq_trust as [$icon, $color, $title, $sub]): ?>
-                    <div class="bg-white/10 border border-white/10 rounded-xl p-4 backdrop-blur-sm">
-                        <i class="fa-solid <?= $icon ?> <?= $color ?> text-xl mb-2 block" aria-hidden="true"></i>
-                        <p class="text-white font-bold text-sm leading-tight"><?= $title ?></p>
-                        <p class="text-gray-400 text-xs mt-0.5"><?= $sub ?></p>
-                    </div>
+                <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-5 leading-tight">
+                    Common Pest Control<br>
+                    <span class="text-green-400">Questions Answered</span>
+                </h1>
+                <p class="text-slate-300 leading-relaxed mb-6 text-lg">
+                    Real answers about termite inspections, cockroach control, spider removal, treatment safety, and everything in between.
+                </p>
+                <!-- Category jump links -->
+                <div class="flex flex-wrap gap-2">
+                    <?php foreach (array_keys($faqs) as $category): ?>
+                    <a href="#<?= htmlspecialchars(strtolower(preg_replace('/[^a-z0-9]+/i', '-', $category))) ?>"
+                       class="text-xs font-medium bg-white/8 hover:bg-white/15 border border-white/12 text-slate-300 px-3 py-1.5 rounded-full transition">
+                        <?= htmlspecialchars($category) ?>
+                    </a>
                     <?php endforeach; ?>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════════════
-         FAQ CONTENT + SIDEBAR
-    ══════════════════════════════════════════════════════════ -->
+    <!-- ── FAQ CONTENT + SIDEBAR ─────────────────────────────────── -->
     <section class="py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row gap-10">
 
-                <!-- ── FAQ Accordion ─────────────────────────── -->
+                <!-- FAQ Accordion -->
                 <div class="w-full lg:w-2/3">
                     <?php
                     $cat_icons = [
-                        'Bed Bug Treatments' => 'fa-fire',
-                        'Rodent Control'     => 'fa-cheese',
-                        'General Questions'  => 'fa-circle-question',
-                        'Cockroach Control'  => 'fa-bug',
+                        'Termite Inspections'      => 'fa-house-crack',
+                        'Cockroach & Spider Control'=> 'fa-bug',
+                        'General Questions'         => 'fa-circle-question',
+                        'Ant & Rodent Control'      => 'fa-cheese',
                     ];
                     foreach ($faqs as $category => $items):
                         $anchor  = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $category));
                         $cat_ico = $cat_icons[$category] ?? 'fa-circle-question';
                     ?>
                     <div id="<?= $anchor ?>" class="mb-12 scroll-mt-24">
-                        <!-- Category header -->
                         <div class="flex items-center gap-3 mb-5">
-                            <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
-                                <i class="fa-solid <?= $cat_ico ?> text-white text-sm" aria-hidden="true"></i>
+                            <div class="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid <?= $cat_ico ?> text-white text-xs" aria-hidden="true"></i>
                             </div>
-                            <h2 class="text-xl font-extrabold text-gray-900"><?= htmlspecialchars($category) ?></h2>
-                            <div class="h-px flex-grow bg-gray-200"></div>
+                            <h2 class="text-lg font-bold text-slate-900"><?= htmlspecialchars($category) ?></h2>
+                            <div class="h-px flex-grow bg-slate-200"></div>
                         </div>
 
-                        <div class="space-y-3">
-                            <?php foreach ($items as $i => $item): ?>
-                            <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group" <?= $i === 0 && $category === 'Bed Bug Treatments' ? 'open' : '' ?>>
-                                <summary class="flex items-start gap-4 px-6 py-5 cursor-pointer list-none group-open:border-b group-open:border-gray-100">
-                                    <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-open:bg-primary transition">
-                                        <i class="fa-solid <?= $item['icon'] ?> text-primary group-open:text-white text-xs transition" aria-hidden="true"></i>
+                        <div class="space-y-2">
+                            <?php foreach ($items as $faq): ?>
+                            <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden">
+                                <summary class="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid <?= htmlspecialchars($faq['icon']) ?> text-green-600 text-sm flex-shrink-0 w-4" aria-hidden="true"></i>
+                                        <span class="font-semibold text-slate-900 text-sm leading-snug"><?= htmlspecialchars($faq['q']) ?></span>
                                     </div>
-                                    <span class="font-semibold text-gray-900 group-open:text-primary transition text-sm flex-grow pr-4 leading-snug mt-0.5"><?= htmlspecialchars($item['q']) ?></span>
-                                    <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform duration-200 flex-shrink-0 mt-1 text-xs" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 text-xs flex-shrink-0 transition-transform group-open:rotate-180" aria-hidden="true"></i>
                                 </summary>
-                                <div class="px-6 pb-6 pt-4 text-gray-500 text-sm leading-relaxed">
-                                    <?= $item['a'] ?>
+                                <div class="px-5 pb-5 pt-1 border-t border-slate-100">
+                                    <p class="text-slate-600 text-sm leading-relaxed pl-7"><?= htmlspecialchars($faq['a']) ?></p>
                                 </div>
                             </details>
                             <?php endforeach; ?>
@@ -166,124 +141,61 @@ require_once BASE_DIR . '/includes/header.php';
                     </div>
                     <?php endforeach; ?>
 
-                    <!-- Bottom CTA -->
-                    <div class="bg-primary rounded-2xl p-10 text-white text-center">
-                        <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <i class="fa-solid fa-headset text-2xl" aria-hidden="true"></i>
-                        </div>
-                        <h2 class="text-2xl font-extrabold tracking-tight mb-3">Still Have a Question?</h2>
-                        <p class="text-gray-300 text-sm leading-relaxed mb-7 max-w-lg mx-auto">
-                            Our licensed team is happy to answer anything before you book. Call us or submit a free inspection request — no obligation.
-                        </p>
-                        <div class="flex flex-wrap justify-center gap-3">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-7 text-center">
+                        <h3 class="font-bold text-slate-900 mb-2">Still have questions?</h3>
+                        <p class="text-sm text-slate-500 mb-5">Our team is ready to help. Call, email, or book a free consultation.</p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                             <a href="<?= $base_url ?>/booking"
-                               class="inline-flex items-center gap-2 bg-accent hover:bg-yellow-800 text-white text-sm font-extrabold px-6 py-3 rounded-xl transition shadow-lg">
-                                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                               class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition text-sm">
+                                <i class="fa-regular fa-calendar-check" aria-hidden="true"></i>
                                 Book Free Inspection
                             </a>
-                            <a href="tel:<?= $site_phone_raw ?>"
-                               class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white text-sm font-semibold px-6 py-3 rounded-xl transition">
-                                <i class="fa-solid fa-phone text-xs" aria-hidden="true"></i>
-                                <?= $site_phone ?>
+                            <a href="<?= $base_url ?>/contact"
+                               class="inline-flex items-center gap-2 border border-slate-200 text-slate-700 hover:border-slate-300 font-medium px-6 py-3 rounded-lg transition text-sm">
+                                Contact Us
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- ── Sticky Sidebar ────────────────────────── -->
-                <aside class="w-full lg:w-1/3 space-y-5">
-                    <div class="lg:sticky lg:top-24">
+                <!-- Sidebar -->
+                <div class="w-full lg:w-1/3 space-y-5">
 
-                        <!-- CTA widget -->
-                        <div class="bg-accent rounded-2xl p-7 text-white text-center mb-5">
-                            <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                <i class="fa-solid fa-calendar-check text-2xl" aria-hidden="true"></i>
+                    <!-- CTA Card -->
+                    <div class="bg-dark rounded-xl border border-white/8 p-7 text-white sticky top-24">
+                        <h3 class="font-bold text-white mb-2 text-sm">Ready to Book?</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-5">
+                            Get a free inspection and quote from a licensed technician today. No obligation.
+                        </p>
+                        <a href="<?= $base_url ?>/booking"
+                           class="block text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition mb-4 text-sm">
+                            Book Free Inspection
+                        </a>
+                        <a href="tel:<?= htmlspecialchars($site_phone_raw) ?>"
+                           class="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition">
+                            <i class="fa-solid fa-phone text-green-400 text-xs" aria-hidden="true"></i>
+                            <?= htmlspecialchars($site_phone) ?>
+                        </a>
+                        <p class="text-xs text-green-400 mt-1">24/7 emergency line</p>
+
+                        <div class="mt-6 pt-5 border-t border-white/8 space-y-3">
+                            <?php
+                            $trust_items = [
+                                ['fa-shield-halved', 'Written service report on every job'],
+                                ['fa-bolt',          '2-hour callback, business hours'],
+                                ['fa-leaf',          'Eco-friendly options always available'],
+                                ['fa-certificate',   'Licensed &amp; insured technicians'],
+                            ];
+                            foreach ($trust_items as [$icon, $label]): ?>
+                            <div class="flex items-center gap-2.5 text-xs text-slate-400">
+                                <i class="fa-solid <?= $icon ?> text-green-400 text-[10px] flex-shrink-0" aria-hidden="true"></i>
+                                <?= $label ?>
                             </div>
-                            <h3 class="font-extrabold text-lg mb-2">Book a FREE Inspection</h3>
-                            <p class="text-green-100 text-xs leading-relaxed mb-5">
-                                We call back within 2 hours. No obligation. No credit card needed.
-                            </p>
-                            <a href="<?= $base_url ?>/booking"
-                               class="block bg-white text-accent text-sm font-extrabold py-3.5 rounded-xl hover:bg-yellow-50 transition shadow-md">
-                                Get Free Quote Now →
-                            </a>
-                            <a href="tel:<?= htmlspecialchars($site_phone_raw) ?>"
-                               class="flex items-center justify-center gap-2 mt-3 text-green-200 hover:text-white text-sm font-semibold transition">
-                                <i class="fa-solid fa-phone text-xs" aria-hidden="true"></i>
-                                <?= htmlspecialchars($site_phone) ?>
-                            </a>
+                            <?php endforeach; ?>
                         </div>
-
-                        <!-- Jump nav -->
-                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-5">
-                            <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Jump to Section</p>
-                            <nav class="space-y-1" aria-label="FAQ navigation">
-                                <?php foreach (array_keys($faqs) as $category):
-                                    $anchor  = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $category));
-                                    $cat_ico = $cat_icons[$category] ?? 'fa-circle-question';
-                                ?>
-                                <a href="#<?= $anchor ?>"
-                                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-primary hover:text-white font-medium transition group">
-                                    <i class="fa-solid <?= $cat_ico ?> text-gray-400 group-hover:text-white text-xs w-4 text-center" aria-hidden="true"></i>
-                                    <?= htmlspecialchars($category) ?>
-                                    <i class="fa-solid fa-arrow-right text-xs ml-auto opacity-0 group-hover:opacity-100 transition" aria-hidden="true"></i>
-                                </a>
-                                <?php endforeach; ?>
-                            </nav>
-                        </div>
-
-                        <!-- Quick trust -->
-                        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6">
-                            <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Why Customers Trust Us</p>
-                            <ul class="space-y-3">
-                                <?php
-                                $trust_items = [
-                                    ['fa-id-card-clip',  'text-primary',   'Licensed Technicians'],
-                                    ['fa-rotate-left',   'text-secondary', 'Free Retreatment Included'],
-                                    ['fa-leaf',          'text-secondary', 'Eco-Friendly Options Always'],
-                                    ['fa-star',          'text-yellow-500','4.9/5 Google Rating'],
-                                    ['fa-bolt',          'text-accent',    '2-Hour Response Commitment'],
-                                ];
-                                foreach ($trust_items as [$icon, $color, $label]): ?>
-                                <li class="flex items-center gap-3 text-sm text-gray-700">
-                                    <i class="fa-solid <?= $icon ?> <?= $color ?> w-4 flex-shrink-0" aria-hidden="true"></i>
-                                    <?= $label ?>
-                                </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-
                     </div>
-                </aside>
 
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════
-         RELATED RESOURCES
-    ══════════════════════════════════════════════════════════ -->
-    <section class="py-12 bg-white border-t border-gray-100">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <?php
-                $resources = [
-                    ['href' => '/services', 'icon' => 'fa-shield-bug',       'color' => 'text-primary',   'bg' => 'bg-primary/10',   'title' => 'Our Services',     'desc' => 'Full breakdown of treatments, methods, and pricing plans.'],
-                    ['href' => '/blogs',    'icon' => 'fa-newspaper',         'color' => 'text-secondary', 'bg' => 'bg-secondary/10', 'title' => 'Pest Control Blog', 'desc' => 'Expert guides to identifying and preventing pest problems in Sydney & Brisbane.'],
-                    ['href' => '/about',    'icon' => 'fa-certificate',       'color' => 'text-accent',    'bg' => 'bg-accent/10',    'title' => 'About Our Team',   'desc' => 'NSW certifications, eco approach, and company background.'],
-                ];
-                foreach ($resources as $r): ?>
-                <a href="<?= $base_url . $r['href'] ?>"
-                   class="flex items-start gap-4 bg-gray-50 rounded-2xl border border-gray-100 p-6 hover:shadow-md transition group">
-                    <div class="w-11 h-11 rounded-xl <?= $r['bg'] ?> flex items-center justify-center flex-shrink-0">
-                        <i class="fa-solid <?= $r['icon'] ?> <?= $r['color'] ?>" aria-hidden="true"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold text-gray-900 text-sm mb-1 group-hover:text-primary transition"><?= $r['title'] ?></p>
-                        <p class="text-gray-400 text-xs leading-relaxed"><?= $r['desc'] ?></p>
-                    </div>
-                </a>
-                <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </section>

@@ -32,7 +32,7 @@ try {
     );
 } catch (PDOException $e) {
     $pdo = null;
-    error_log('Sydney Pest DB connection failed: ' . $e->getMessage());
+    error_log('General Pest Removal DB connection failed: ' . $e->getMessage());
 }
 
 // Load site config from DB into global array (used by header, footer, templates)
