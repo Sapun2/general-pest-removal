@@ -29,31 +29,12 @@ if (isset($_GET['id']) && $pdo) {
     } catch (PDOException $e) { $error = "Could not load service."; }
 }
 
-// ── Image upload helper ──────────────────────────────────
-function handle_image_upload_svc(string $field_name, string $upload_dir): string
-{
-    if (empty($_FILES[$field_name]['tmp_name'])) return '';
-    $file    = $_FILES[$field_name];
-    $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg','jpeg','png','webp','gif'];
-    if (!in_array($ext, $allowed, true))  return '';
-    if ($file['size'] > 5 * 1024 * 1024) return '';
-    if ($file['error'] !== UPLOAD_ERR_OK) return '';
-    $filename = uniqid('img_', true) . '.' . $ext;
-    $dest     = $upload_dir . '/' . $filename;
-    if (!move_uploaded_file($file['tmp_name'], $dest)) return '';
-    return '/assets/images/uploads/' . $filename;
-}
-
 // Handle save
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
         header('Location: /admin/services'); exit;
     }
-
-    $upload_dir   = BASE_DIR . '/assets/images/uploads';
-    $image_upload = handle_image_upload_svc('image_file', $upload_dir);
 
     $name = trim(strip_tags($_POST['name'] ?? ''));
     $slug = preg_replace('/[^a-z0-9-]/', '', strtolower(trim(str_replace(' ', '-', $_POST['slug'] ?? ''))));
@@ -85,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
             'description'      => trim($_POST['description']                 ?? ''), // HTML allowed
             'icon'             => trim(strip_tags($_POST['icon']             ?? 'fa-shield-bug')),
             'badge_text'       => trim(strip_tags($_POST['badge_text']       ?? '')),
-            'image_path'       => $image_upload ?: trim($_POST['image_path'] ?? ''),
+            'image_path'       => trim($_POST['image_path'] ?? ''),
             'features'         => json_encode($features),
             'link_anchor'      => trim(strip_tags($_POST['link_anchor']      ?? '')),
             'sort_order'       => (int)($_POST['sort_order']                 ?? 0),
@@ -163,7 +144,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
     </div>
     <?php endif; ?>
 
-    <form method="POST" enctype="multipart/form-data" class="space-y-6" id="service-form">
+    <form method="POST" class="space-y-6" id="service-form">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
         <!-- Basic Info -->
@@ -251,10 +232,10 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     </div>
                     <!-- Upload -->
                     <label class="flex items-center gap-2 cursor-pointer w-fit bg-gray-100 hover:bg-gray-200 border border-dashed border-gray-300 px-4 py-2.5 rounded-lg transition mb-2">
-                        <i class="fa-solid fa-upload text-gray-500 text-sm"></i>
-                        <span class="text-sm text-gray-600 font-medium">Upload image</span>
-                        <input type="file" name="image_file" id="svc-img-file" accept="image/*"
-                               class="hidden" onchange="previewSvcImage(this)">
+                        <i class="fa-solid fa-upload text-gray-500 text-sm" id="svc-upload-icon"></i>
+                        <span class="text-sm text-gray-600 font-medium" id="svc-upload-label">Upload image</span>
+                        <input type="file" id="svc-img-file" accept="image/*"
+                               class="hidden" onchange="uploadSvcImage(this)">
                     </label>
                     <p class="text-xs text-gray-400 mb-1">Or enter a path manually:</p>
                     <input type="text" name="image_path" id="svc-img-path"
@@ -388,14 +369,33 @@ require_once BASE_DIR . '/admin/sidebar.php';
 
 <script>
 // Service image upload helpers
-function previewSvcImage(input) {
+function uploadSvcImage(input) {
     var file = input.files[0];
     if (!file) return;
-    var wrap = document.getElementById('svc-img-preview-wrap');
-    var img  = document.getElementById('svc-img-preview');
-    var reader = new FileReader();
-    reader.onload = function (e) { img.src = e.target.result; wrap.classList.remove('hidden'); };
-    reader.readAsDataURL(file);
+    var icon  = document.getElementById('svc-upload-icon');
+    var label = document.getElementById('svc-upload-label');
+    if (icon)  { icon.className = 'fa-solid fa-spinner fa-spin text-gray-500 text-sm'; }
+    if (label) { label.textContent = 'Uploading…'; }
+    var fd = new FormData();
+    fd.append('file', file);
+    fetch('/admin/upload-image', { method: 'POST', body: fd })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (icon)  { icon.className = 'fa-solid fa-upload text-gray-500 text-sm'; }
+            if (label) { label.textContent = 'Upload image'; }
+            if (data.ok) {
+                document.getElementById('svc-img-path').value = data.path;
+                updateSvcPreview(data.path);
+                input.value = '';
+            } else {
+                alert('Upload failed: ' + data.error);
+            }
+        })
+        .catch(function() {
+            if (icon)  { icon.className = 'fa-solid fa-upload text-gray-500 text-sm'; }
+            if (label) { label.textContent = 'Upload image'; }
+            alert('Upload failed. Please try again.');
+        });
 }
 function updateSvcPreview(val) {
     var wrap = document.getElementById('svc-img-preview-wrap');

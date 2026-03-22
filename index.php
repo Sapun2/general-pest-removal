@@ -82,6 +82,9 @@ if (preg_match('#^/admin(/.*)?$#', $path, $matches)) {
         case '/setup':
             require 'admin/setup.php';
             break;
+        case '/upload-image':
+            require 'admin/upload-image.php';
+            break;
         default:
             require 'admin/index.php';
     }

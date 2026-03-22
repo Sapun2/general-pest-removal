@@ -11,9 +11,8 @@ if (empty($_SESSION['csrf_token'])) $_SESSION['csrf_token'] = bin2hex(random_byt
 
 $post        = null;
 $is_edit     = false;
-$success     = '';
-$error       = '';
-$upload_warn = '';
+$success = '';
+$error   = '';
 
 // Load existing post if editing
 if (isset($_GET['id']) && $pdo) {
@@ -25,57 +24,12 @@ if (isset($_GET['id']) && $pdo) {
     } catch (PDOException $e) { $error = "Could not load post."; }
 }
 
-// ── Image upload helper ──────────────────────────────────
-function handle_image_upload(string $field_name, string $upload_dir, string &$err = ''): string
-{
-    if (empty($_FILES[$field_name]['tmp_name'])) return '';
-    $file = $_FILES[$field_name];
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        $err = 'Upload failed (error code ' . $file['error'] . '). Max file size is 2 MB.';
-        return '';
-    }
-    $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg','jpeg','png','webp','gif'];
-    if (!in_array($ext, $allowed, true)) {
-        $err = 'Invalid file type. Allowed: JPG, PNG, WebP, GIF.';
-        return '';
-    }
-    if ($file['size'] > 5 * 1024 * 1024) {
-        $err = 'File too large. Maximum is 5 MB.';
-        return '';
-    }
-    if (!is_dir($upload_dir)) {
-        @mkdir($upload_dir, 0755, true);
-    }
-    $filename = uniqid('img_', true) . '.' . $ext;
-    $dest     = $upload_dir . '/' . $filename;
-    if (!move_uploaded_file($file['tmp_name'], $dest)) {
-        $err = 'Could not save the uploaded file. Check directory permissions.';
-        return '';
-    }
-    return '/assets/images/uploads/' . $filename;
-}
-
 // Handle save
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
-    error_log('[BLOG_EDIT] POST received. id=' . ($_GET['id'] ?? 'none') . ' is_edit=' . ($is_edit ? 'yes' : 'no'));
-
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
-        error_log('[BLOG_EDIT] CSRF mismatch – redirecting');
         $_SESSION['flash_error'] = 'Invalid request.';
         header('Location: /admin/blogs'); exit;
     }
-
-    $upload_dir = BASE_DIR . '/assets/images/uploads';
-
-    // Handle file uploads — overrides text field if a file was selected
-    $fi_err = '';
-    $featured_image_upload = handle_image_upload('featured_image_file', $upload_dir, $fi_err);
-    error_log('[BLOG_EDIT] featured_image_upload=' . var_export($featured_image_upload, true) . ' fi_err=' . var_export($fi_err, true));
-    $og_err = '';
-    $og_image_upload       = handle_image_upload('og_image_file',       $upload_dir, $og_err);
-    // Non-fatal: upload warning shown alongside save result
-    $upload_warn = $fi_err ?: $og_err;
 
     $data = [
         'slug'             => preg_replace('/[^a-z0-9-]/', '', strtolower(trim(str_replace(' ', '-', $_POST['slug'] ?? '')))),
@@ -83,21 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
         'excerpt'          => trim(strip_tags($_POST['excerpt']          ?? '')),
         'content'          => trim($_POST['content']                     ?? ''), // HTML allowed
         'category'         => trim(strip_tags($_POST['category']         ?? '')),
-        'featured_image'   => $featured_image_upload ?: trim($_POST['featured_image'] ?? ''),
+        'featured_image'   => trim($_POST['featured_image']              ?? ''),
         'meta_title'       => trim(strip_tags($_POST['meta_title']       ?? '')),
         'meta_description' => trim(strip_tags($_POST['meta_description'] ?? '')),
-        'og_image'         => $og_image_upload ?: trim($_POST['og_image'] ?? ''),
+        'og_image'         => trim($_POST['og_image']                    ?? ''),
         'author'           => trim(strip_tags($_POST['author']           ?? 'General Pest Removal Team')),
         'is_published'     => isset($_POST['is_published']) ? 1 : 0,
     ];
-    error_log('[BLOG_EDIT] data[featured_image]=' . $data['featured_image'] . ' slug=' . $data['slug'] . ' title_len=' . strlen($data['title']));
 
     if (empty($data['slug']) || empty($data['title'])) {
         $error = "Slug and Title are required.";
-        error_log('[BLOG_EDIT] Validation failed: slug=' . var_export($data['slug'], true) . ' title=' . var_export($data['title'], true));
     } else {
         try {
-            error_log('[BLOG_EDIT] is_edit=' . ($is_edit ? 'true' : 'false') . ' post_id=' . ($post['id'] ?? 'null'));
             if ($is_edit && $post) {
                 $sql = "UPDATE blog_posts SET slug=:slug, title=:title, excerpt=:excerpt, content=:content,
                         category=:category, featured_image=:featured_image, meta_title=:meta_title,
@@ -118,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
                     ':is_published'     => $data['is_published'],
                     ':id'               => $post['id'],
                 ]);
-                error_log('[BLOG_EDIT] UPDATE executed. rows=' . $stmt->rowCount() . ' featured_image=' . $data['featured_image']);
                 $success = "Post updated successfully.";
                 // Reload post
                 $stmt2 = $pdo->prepare("SELECT * FROM blog_posts WHERE id = ? LIMIT 1");
@@ -183,18 +133,13 @@ require_once BASE_DIR . '/admin/sidebar.php';
             <i class="fa-solid fa-check-circle"></i> <?= htmlspecialchars($success) ?>
         </div>
         <?php endif; ?>
-        <?php if (!empty($upload_warn)): ?>
-        <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
-            <i class="fa-solid fa-triangle-exclamation"></i> Image not saved: <?= htmlspecialchars($upload_warn) ?>
-        </div>
-        <?php endif; ?>
         <?php if ($error): ?>
         <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
             <i class="fa-solid fa-triangle-exclamation"></i> <?= htmlspecialchars($error) ?>
         </div>
         <?php endif; ?>
 
-        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form method="POST" class="space-y-6">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
             <div class="bg-white rounded-xl shadow-sm p-6 space-y-5">
@@ -267,10 +212,10 @@ require_once BASE_DIR . '/admin/sidebar.php';
                         </div>
                         <!-- File upload -->
                         <label class="flex items-center gap-2 cursor-pointer w-fit bg-gray-100 hover:bg-gray-200 border border-dashed border-gray-300 px-4 py-2.5 rounded-lg transition mb-2">
-                            <i class="fa-solid fa-upload text-gray-500 text-sm"></i>
-                            <span class="text-sm text-gray-600 font-medium">Upload image</span>
-                            <input type="file" name="featured_image_file" id="fi-file" accept="image/*"
-                                   class="hidden" onchange="previewImage(this,'fi-preview-wrap','fi-preview')">
+                            <i class="fa-solid fa-upload text-gray-500 text-sm" id="fi-upload-icon"></i>
+                            <span class="text-sm text-gray-600 font-medium" id="fi-upload-label">Upload image</span>
+                            <input type="file" id="fi-file" accept="image/*"
+                                   class="hidden" onchange="uploadImage(this,'featured_image','fi-preview-wrap','fi-preview','fi-upload-icon','fi-upload-label')">
                         </label>
                         <p class="text-xs text-gray-400 mb-1">Or enter a URL manually:</p>
                         <input type="text" name="featured_image" id="featured_image"
@@ -319,10 +264,10 @@ require_once BASE_DIR . '/admin/sidebar.php';
                         </button>
                     </div>
                     <label class="flex items-center gap-2 cursor-pointer w-fit bg-gray-100 hover:bg-gray-200 border border-dashed border-gray-300 px-4 py-2.5 rounded-lg transition mb-2">
-                        <i class="fa-solid fa-upload text-gray-500 text-sm"></i>
-                        <span class="text-sm text-gray-600 font-medium">Upload OG image</span>
-                        <input type="file" name="og_image_file" id="og-file" accept="image/*"
-                               class="hidden" onchange="previewImage(this,'og-preview-wrap','og-preview')">
+                        <i class="fa-solid fa-upload text-gray-500 text-sm" id="og-upload-icon"></i>
+                        <span class="text-sm text-gray-600 font-medium" id="og-upload-label">Upload OG image</span>
+                        <input type="file" id="og-file" accept="image/*"
+                               class="hidden" onchange="uploadImage(this,'og_image','og-preview-wrap','og-preview','og-upload-icon','og-upload-label')">
                     </label>
                     <p class="text-xs text-gray-400 mb-1">Or enter a URL manually (leave blank to use featured image):</p>
                     <input type="text" name="og_image"
@@ -353,18 +298,35 @@ require_once BASE_DIR . '/admin/sidebar.php';
 </main>
 
 <script>
-// Image upload helpers
-function previewImage(input, wrapId, imgId) {
+// AJAX image upload — uploads immediately on file select, stores server path in text field
+function uploadImage(input, textFieldId, wrapId, imgId, iconId, labelId) {
     var file = input.files[0];
     if (!file) return;
-    var wrap = document.getElementById(wrapId);
-    var img  = document.getElementById(imgId);
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        img.src = e.target.result;
-        wrap.classList.remove('hidden');
-    };
-    reader.readAsDataURL(file);
+    var icon  = document.getElementById(iconId);
+    var label = document.getElementById(labelId);
+    // Show uploading state
+    if (icon)  { icon.className  = 'fa-solid fa-spinner fa-spin text-gray-500 text-sm'; }
+    if (label) { label.textContent = 'Uploading…'; }
+    var fd = new FormData();
+    fd.append('file', file);
+    fetch('/admin/upload-image', { method: 'POST', body: fd })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (icon)  { icon.className  = 'fa-solid fa-upload text-gray-500 text-sm'; }
+            if (label) { label.textContent = labelId.startsWith('og') ? 'Upload OG image' : 'Upload image'; }
+            if (data.ok) {
+                document.getElementById(textFieldId).value = data.path;
+                updatePreview(data.path, wrapId, imgId);
+                input.value = '';
+            } else {
+                alert('Upload failed: ' + data.error);
+            }
+        })
+        .catch(function() {
+            if (icon)  { icon.className  = 'fa-solid fa-upload text-gray-500 text-sm'; }
+            if (label) { label.textContent = labelId.startsWith('og') ? 'Upload OG image' : 'Upload image'; }
+            alert('Upload failed. Please try again.');
+        });
 }
 
 function updatePreview(val, wrapId, imgId) {
