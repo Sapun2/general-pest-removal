@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # Base URL path (Change to / when live)
-    RewriteBase /general-pest-removal/
+    # Base URL path
+    RewriteBase /
 
     # If the requested file or directory physically exists (like assets/images), serve it directly.
     RewriteCond %{REQUEST_FILENAME} !-f

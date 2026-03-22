@@ -14,10 +14,10 @@ if (!defined('SITE_BASE_URL')) {
 
 // DB credentials — edit these or move to a .env file for production
 define('DB_HOST', '127.0.0.1');
-define('DB_PORT', '8889');
-define('DB_NAME', 'sydney_pest_removal');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
+define('DB_PORT', '3306');
+define('DB_NAME', 'general_pest_db');
+define('DB_USER', 'pestuser');
+define('DB_PASS', 'PestDB@Secure2024!');
 
 try {
     $pdo = new PDO(
