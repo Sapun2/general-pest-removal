@@ -2,7 +2,7 @@
     RewriteEngine On
     
     # Base URL path (Change to / when live)
-    RewriteBase /sydney-pest-removal/
+    RewriteBase /general-pest-removal/
 
     # If the requested file or directory physically exists (like assets/images), serve it directly.
     RewriteCond %{REQUEST_FILENAME} !-f
