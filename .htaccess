@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Base URL path (Change to / when live)
+    RewriteBase /sydney-pest-removal/
+
+    # If the requested file or directory physically exists (like assets/images), serve it directly.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Otherwise, send everything to index.php for routing
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

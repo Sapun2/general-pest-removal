@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Block admin panel from indexing
+Disallow: /admin/
+
+# Block process scripts
+Disallow: /process_booking.php
+Disallow: /process_contact.php
+
+# Block thank-you page (no indexing value)
+Disallow: /thank-you
+
+# Sitemap location
+Sitemap: https://generalpestremoval.com/sitemap.xml
