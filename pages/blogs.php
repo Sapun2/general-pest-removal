@@ -2,6 +2,15 @@
 require_once BASE_DIR . '/includes/db.php';
 require_once BASE_DIR . '/includes/seo-meta.php';
 
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$flash_error = $_SESSION['flash_error'] ?? '';
+$form_data   = $_SESSION['form_data']   ?? [];
+unset($_SESSION['flash_error'], $_SESSION['form_data']);
+
 $page_seo = get_page_seo('blogs', [
     'title'       => 'Pest Control Blog — Tips & Guides for Sydney & Brisbane | General Pest Removal',
     'description' => 'Expert pest control articles for Sydney and Brisbane homeowners and businesses. Identify termites, prevent rodent infestations, understand cockroach treatments, and learn eco-friendly IPM strategies.',
@@ -60,7 +69,7 @@ require_once BASE_DIR . '/includes/header.php';
 <main class="flex-grow bg-white">
 
     <!-- ── HERO ─────────────────────────────────────────────────── -->
-    <section class="bg-dark text-white py-16 md:py-20">
+    <section class="bg-dark text-white py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav aria-label="Breadcrumb" class="mb-8">
                 <ol class="flex items-center gap-2 text-xs text-slate-500">
@@ -69,18 +78,84 @@ require_once BASE_DIR . '/includes/header.php';
                     <li aria-current="page" class="text-slate-300">Blog</li>
                 </ol>
             </nav>
-            <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-2 bg-green-600/15 border border-green-500/20 rounded-full px-4 py-1.5 mb-5">
-                    <i class="fa-solid fa-newspaper text-green-400 text-xs" aria-hidden="true"></i>
-                    <span class="text-green-400 text-xs font-semibold uppercase tracking-wide">Expert Knowledge Base</span>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-green-600/15 border border-green-500/20 rounded-full px-4 py-1.5 mb-6">
+                        <i class="fa-solid fa-newspaper text-green-400 text-xs" aria-hidden="true"></i>
+                        <span class="text-green-400 text-xs font-semibold uppercase tracking-wide">Expert Knowledge Base</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5 leading-tight">
+                        Pest Control Tips<br>
+                        <span class="text-green-400">&amp; Expert Guides</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed mb-8 max-w-lg text-lg">
+                        Expert advice on preventing, identifying, and treating every pest problem specific to Sydney and Brisbane's unique climate.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <?php
+                        $badges = ['2-Hour Response', 'Free Retreatment', 'Pet & Child Safe', '4.9★ Rated'];
+                        foreach ($badges as $badge): ?>
+                        <span class="inline-flex items-center gap-1.5 bg-white/8 border border-white/12 text-slate-300 text-xs font-medium px-3 py-1.5 rounded-full">
+                            <i class="fa-solid fa-check text-green-400 text-[10px]" aria-hidden="true"></i>
+                            <?= $badge ?>
+                        </span>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-                <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-5 leading-tight">
-                    Pest Control Tips<br>
-                    <span class="text-green-400">&amp; Expert Guides</span>
-                </h1>
-                <p class="text-slate-300 leading-relaxed text-lg">
-                    Expert advice on preventing, identifying, and treating every pest problem specific to Sydney and Brisbane's unique climate.
-                </p>
+
+                <!-- Quick Quote Form -->
+                <div class="bg-white rounded-xl p-6 shadow-xl">
+                    <p class="font-bold text-slate-900 text-base mb-1">Get a Free Quote</p>
+                    <p class="text-slate-500 text-xs mb-5">We call back within 2 hours during business hours.</p>
+
+                    <?php if ($flash_error): ?>
+                    <div class="bg-red-50 border border-red-200 text-red-700 text-xs px-3 py-2 rounded-lg mb-4">
+                        <?= htmlspecialchars($flash_error) ?>
+                    </div>
+                    <?php endif; ?>
+
+                    <form action="<?= $base_url ?>/process_booking" method="POST" class="space-y-3" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" name="first_name" required placeholder="First Name *"
+                                   value="<?= htmlspecialchars($form_data['first_name'] ?? '') ?>"
+                                   class="w-full px-3.5 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:bg-white focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/10 transition placeholder:text-slate-400">
+                            <input type="text" name="last_name" required placeholder="Last Name *"
+                                   value="<?= htmlspecialchars($form_data['last_name'] ?? '') ?>"
+                                   class="w-full px-3.5 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:bg-white focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/10 transition placeholder:text-slate-400">
+                        </div>
+                        <input type="tel" name="phone" required placeholder="Phone Number *"
+                               value="<?= htmlspecialchars($form_data['phone'] ?? '') ?>"
+                               class="w-full px-3.5 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:bg-white focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/10 transition placeholder:text-slate-400">
+                        <input type="text" name="street_address" required placeholder="Street Address *"
+                               value="<?= htmlspecialchars($form_data['street_address'] ?? '') ?>"
+                               class="w-full px-3.5 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:bg-white focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/10 transition placeholder:text-slate-400">
+                        <div class="relative">
+                            <select name="pest_type" required
+                                    class="w-full appearance-none px-3.5 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:bg-white focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/10 transition pr-10">
+                                <option value="">What's the pest?</option>
+                                <option value="termites">Termites</option>
+                                <option value="cockroaches">Cockroaches</option>
+                                <option value="spiders">Spiders</option>
+                                <option value="ants">Ants / Fire Ants</option>
+                                <option value="rodents">Mice / Rats</option>
+                                <option value="wasps">Wasps / Bees</option>
+                                <option value="other">Other / Not Sure</option>
+                            </select>
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <button type="submit"
+                                class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3.5 rounded-lg transition flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                            Get Free Quote
+                        </button>
+                        <p class="text-center text-xs text-slate-400">
+                            <i class="fa-solid fa-lock mr-1" aria-hidden="true"></i>No obligation · 100% confidential
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
