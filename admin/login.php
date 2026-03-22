@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Already logged in — redirect to dashboard
 if (!empty($_SESSION['admin_logged_in'])) {
-    header('Location: /sydney-pest-removal/admin');
+    header('Location: /general-pest-removal/admin');
     exit;
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($row && password_verify($password, $row['password_hash'])) {
                 $_SESSION['admin_logged_in'] = true;
                 $_SESSION['admin_username']  = $username;
-                header('Location: /sydney-pest-removal/admin');
+                header('Location: /general-pest-removal/admin');
                 exit;
             } else {
                 $error = 'Invalid username or password.';
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 <div class="w-full max-w-md">
     <div class="text-center mb-8">
-        <a href="/sydney-pest-removal/" class="inline-flex items-center gap-2 text-2xl font-black text-primary">
+        <a href="/general-pest-removal/" class="inline-flex items-center gap-2 text-2xl font-black text-primary">
             <i class="fa-solid fa-bug text-secondary text-3xl"></i>
             <span>Sydney<span class="text-secondary">Pest</span> Admin</span>
         </a>
@@ -82,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </button>
         </form>
         <p class="text-xs text-gray-400 text-center mt-6">
-            First time? <a href="/sydney-pest-removal/admin/setup" class="text-primary underline">Run DB Setup</a> to create the admin account.
+            First time? <a href="/general-pest-removal/admin/setup" class="text-primary underline">Run DB Setup</a> to create the admin account.
         </p>
     </div>
     <p class="text-center mt-4 text-sm text-gray-500">
-        <a href="/sydney-pest-removal/" class="hover:text-primary transition">← Back to Website</a>
+        <a href="/general-pest-removal/" class="hover:text-primary transition">← Back to Website</a>
     </p>
 </div>
 </body>

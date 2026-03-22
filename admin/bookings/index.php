@@ -19,7 +19,7 @@ $valid_statuses = ['new', 'contacted', 'completed', 'cancelled'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id']) && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /sydney-pest-removal/admin/bookings'); exit;
+        header('Location: /general-pest-removal/admin/bookings'); exit;
     }
     $id     = (int)$_POST['id'];
     $action = $_POST['action'];
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
             $_SESSION['flash_error'] = 'Update failed.';
         }
         $view_redirect = isset($_POST['view_id']) ? '?view=' . (int)$_POST['view_id'] : '';
-        header('Location: /sydney-pest-removal/admin/bookings' . $view_redirect);
+        header('Location: /general-pest-removal/admin/bookings' . $view_redirect);
         exit;
     }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
         } catch (PDOException $e) {
             $_SESSION['flash_error'] = 'Delete failed.';
         }
-        header('Location: /sydney-pest-removal/admin/bookings');
+        header('Location: /general-pest-removal/admin/bookings');
         exit;
     }
 }
@@ -139,7 +139,7 @@ $status_classes = [
     <?php if ($viewing): ?>
     <!-- ── Single Booking Detail ─────────────────────────────── -->
     <div class="mb-6">
-        <a href="/sydney-pest-removal/admin/bookings" class="text-sm text-gray-400 hover:text-primary flex items-center gap-1 mb-4 w-fit">
+        <a href="/general-pest-removal/admin/bookings" class="text-sm text-gray-400 hover:text-primary flex items-center gap-1 mb-4 w-fit">
             <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to All Bookings
         </a>
         <div class="bg-white rounded-xl shadow-sm p-6">
@@ -245,7 +245,7 @@ $status_classes = [
         </div>
         <button type="submit" class="bg-primary text-white font-bold px-5 py-2 rounded-lg text-sm hover:bg-blue-900 transition">Filter</button>
         <?php if ($filter_status || $filter_pest || $search): ?>
-        <a href="/sydney-pest-removal/admin/bookings" class="text-sm text-gray-400 hover:text-gray-700 py-2">Clear</a>
+        <a href="/general-pest-removal/admin/bookings" class="text-sm text-gray-400 hover:text-gray-700 py-2">Clear</a>
         <?php endif; ?>
     </form>
 

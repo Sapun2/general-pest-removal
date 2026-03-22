@@ -36,7 +36,7 @@ if (isset($_GET['clear']) && isset($_GET['edit']) && $pdo) {
             $_SESSION['flash_error'] = 'Could not clear overrides: ' . htmlspecialchars($e->getMessage());
         }
     }
-    header('Location: /sydney-pest-removal/admin/seo?edit=' . $page_key);
+    header('Location: /general-pest-removal/admin/seo?edit=' . $page_key);
     exit;
 }
 
@@ -44,7 +44,7 @@ if (isset($_GET['clear']) && isset($_GET['edit']) && $pdo) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['page_key'])) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /sydney-pest-removal/admin/seo'); exit;
+        header('Location: /general-pest-removal/admin/seo'); exit;
     }
     $page_key = preg_replace('/[^a-z0-9_-]/', '', $_POST['page_key']);
     if (isset($managed_pages[$page_key])) {
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['page_key'])) {
         } else {
             $_SESSION['flash_error'] = 'Failed to save. Check database connection.';
         }
-        header('Location: /sydney-pest-removal/admin/seo?edit=' . $page_key);
+        header('Location: /general-pest-removal/admin/seo?edit=' . $page_key);
         exit;
     }
 }
@@ -122,7 +122,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         <div class="flex-grow bg-white rounded-xl shadow-sm p-6">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-lg font-bold text-gray-900"><?= htmlspecialchars($managed_pages[$editing]['label']) ?></h2>
-                <a href="/sydney-pest-removal<?= $managed_pages[$editing]['url'] ?>" target="_blank"
+                <a href="/general-pest-removal<?= $managed_pages[$editing]['url'] ?>" target="_blank"
                    class="text-xs text-gray-400 hover:text-primary transition flex items-center gap-1">
                     <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> View Live
                 </a>

@@ -21,19 +21,19 @@ $_a_logo_primary    = $_asc['logo_text_primary']   ?? 'Sydney';
 $_a_logo_secondary  = $_asc['logo_text_secondary'] ?? 'Pest';
 
 $nav_items = [
-    'dashboard' => ['href' => '/sydney-pest-removal/admin',                  'icon' => 'fa-gauge-high',         'label' => 'Dashboard'],
-    'bookings'  => ['href' => '/sydney-pest-removal/admin/bookings',         'icon' => 'fa-calendar-check',     'label' => 'Bookings'],
-    'contacts'  => ['href' => '/sydney-pest-removal/admin/contacts',         'icon' => 'fa-envelope-open-text', 'label' => 'Messages'],
-    'services'  => ['href' => '/sydney-pest-removal/admin/services',         'icon' => 'fa-shield-bug',         'label' => 'Services'],
-    'blogs'     => ['href' => '/sydney-pest-removal/admin/blogs',            'icon' => 'fa-newspaper',          'label' => 'Blog Posts'],
-    'seo'       => ['href' => '/sydney-pest-removal/admin/seo',              'icon' => 'fa-magnifying-glass',   'label' => 'SEO Settings'],
-    'config'    => ['href' => '/sydney-pest-removal/admin/config',           'icon' => 'fa-gear',               'label' => 'Site Config'],
+    'dashboard' => ['href' => '/general-pest-removal/admin',                  'icon' => 'fa-gauge-high',         'label' => 'Dashboard'],
+    'bookings'  => ['href' => '/general-pest-removal/admin/bookings',         'icon' => 'fa-calendar-check',     'label' => 'Bookings'],
+    'contacts'  => ['href' => '/general-pest-removal/admin/contacts',         'icon' => 'fa-envelope-open-text', 'label' => 'Messages'],
+    'services'  => ['href' => '/general-pest-removal/admin/services',         'icon' => 'fa-shield-bug',         'label' => 'Services'],
+    'blogs'     => ['href' => '/general-pest-removal/admin/blogs',            'icon' => 'fa-newspaper',          'label' => 'Blog Posts'],
+    'seo'       => ['href' => '/general-pest-removal/admin/seo',              'icon' => 'fa-magnifying-glass',   'label' => 'SEO Settings'],
+    'config'    => ['href' => '/general-pest-removal/admin/config',           'icon' => 'fa-gear',               'label' => 'Site Config'],
 ];
 ?>
 <aside class="w-64 bg-dark text-gray-300 flex flex-col min-h-screen sticky top-0 flex-shrink-0">
     <!-- Logo -->
     <div class="p-5 border-b border-gray-800">
-        <a href="/sydney-pest-removal/" class="flex items-center gap-2.5 mb-1" title="View Website">
+        <a href="/general-pest-removal/" class="flex items-center gap-2.5 mb-1" title="View Website">
             <?php if ($_a_logo_url): ?>
             <img src="<?= htmlspecialchars($_a_logo_url) ?>"
                  alt="<?= htmlspecialchars($_a_logo_primary . $_a_logo_secondary) ?>"
@@ -65,11 +65,11 @@ $nav_items = [
 
         <hr class="border-gray-800 my-3">
 
-        <a href="/sydney-pest-removal/"
+        <a href="/general-pest-removal/"
            class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-400 hover:bg-gray-800 hover:text-white transition">
             <i class="fa-solid fa-globe w-4 text-center" aria-hidden="true"></i> View Website
         </a>
-        <a href="/sydney-pest-removal/admin/logout"
+        <a href="/general-pest-removal/admin/logout"
            class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-red-400 hover:bg-red-900 hover:text-white transition">
             <i class="fa-solid fa-right-from-bracket w-4 text-center" aria-hidden="true"></i> Logout
         </a>

@@ -44,7 +44,7 @@ function save_keys(PDO $pdo, array $keys, array $post, array $url_keys = []): vo
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /sydney-pest-removal/admin/config'); exit;
+        header('Location: /general-pest-removal/admin/config'); exit;
     }
 
     $section = $_POST['_section'] ?? '';
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
         ];
         $label = $section_labels[$section] ?? 'Settings';
         $_SESSION['flash_success'] = "{$label} saved successfully.";
-        header('Location: /sydney-pest-removal/admin/config#' . $section); exit;
+        header('Location: /general-pest-removal/admin/config#' . $section); exit;
 
     } catch (PDOException $e) {
         $flash_error = 'Save failed: ' . $e->getMessage();
@@ -152,7 +152,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             <h1 class="text-2xl font-bold text-gray-900">Site Configuration</h1>
             <p class="text-sm text-gray-400 mt-1">Each section saves independently. Changes reflect immediately across all public pages.</p>
         </div>
-        <a href="/sydney-pest-removal/" target="_blank"
+        <a href="/general-pest-removal/" target="_blank"
            class="text-xs text-gray-400 hover:text-primary transition flex items-center gap-1.5">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> View Website
         </a>

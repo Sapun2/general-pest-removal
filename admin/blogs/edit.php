@@ -44,7 +44,7 @@ function handle_image_upload(string $field_name, string $upload_dir): string
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
         $_SESSION['flash_error'] = 'Invalid request.';
-        header('Location: /sydney-pest-removal/admin/blogs'); exit;
+        header('Location: /general-pest-removal/admin/blogs'); exit;
     }
 
     $upload_dir = BASE_DIR . '/assets/images/uploads';
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
                     ':is_published'     => $data['is_published'],
                 ]);
                 $new_id = $pdo->lastInsertId();
-                header("Location: /sydney-pest-removal/admin/blogs/edit?id={$new_id}&saved=1");
+                header("Location: /general-pest-removal/admin/blogs/edit?id={$new_id}&saved=1");
                 exit;
             }
         } catch (PDOException $e) {
@@ -138,12 +138,12 @@ require_once BASE_DIR . '/admin/sidebar.php';
 <main class="flex-grow p-8">
     <div class="max-w-4xl mx-auto">
         <div class="flex items-center gap-4 mb-8">
-            <a href="/sydney-pest-removal/admin/blogs" class="text-gray-400 hover:text-primary transition">
+            <a href="/general-pest-removal/admin/blogs" class="text-gray-400 hover:text-primary transition">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <h1 class="text-2xl font-bold text-gray-900"><?= $is_edit ? 'Edit Post' : 'New Blog Post' ?></h1>
             <?php if ($is_edit && $post): ?>
-            <a href="/sydney-pest-removal/blog/<?= htmlspecialchars($post['slug']) ?>" target="_blank"
+            <a href="/general-pest-removal/blog/<?= htmlspecialchars($post['slug']) ?>" target="_blank"
                class="ml-auto text-xs text-gray-400 hover:text-primary transition flex items-center gap-1">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live
             </a>
@@ -310,7 +310,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             </div>
 
             <div class="flex justify-between">
-                <a href="/sydney-pest-removal/admin/blogs" class="text-gray-400 hover:text-gray-600 py-2.5 transition">← Back to Posts</a>
+                <a href="/general-pest-removal/admin/blogs" class="text-gray-400 hover:text-gray-600 py-2.5 transition">← Back to Posts</a>
                 <button type="submit" class="bg-primary hover:bg-blue-900 text-white font-bold px-10 py-2.5 rounded-lg transition">
                     <?= $is_edit ? 'Save Changes' : 'Create Post' ?>
                 </button>

@@ -51,7 +51,7 @@ if ($seo_breadcrumbs) {
 $request_uri = $_SERVER['REQUEST_URI'];
 
 function isActive($path, $uri) {
-    if ($path === '/' && ($uri === '/sydney-pest-removal/' || $uri === '/sydney-pest-removal' || $uri === '/sydney-pest-removal/index.php' || $uri === '/generalpestremoval/' || $uri === '/generalpestremoval')) {
+    if ($path === '/' && ($uri === '/general-pest-removal/' || $uri === '/general-pest-removal' || $uri === '/general-pest-removal/index.php' || $uri === '/generalpestremoval/' || $uri === '/generalpestremoval')) {
         return true;
     }
     if ($path !== '/' && strpos($uri, $path) !== false) {

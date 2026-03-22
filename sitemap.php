@@ -9,7 +9,7 @@ header('Content-Type: application/xml; charset=utf-8');
 if (!defined('BASE_DIR')) define('BASE_DIR', __DIR__);
 require_once __DIR__ . '/includes/db.php';
 
-$site_url = defined('SITE_BASE_URL') ? SITE_BASE_URL : 'http://localhost:8888/sydney-pest-removal';
+$site_url = defined('SITE_BASE_URL') ? SITE_BASE_URL : 'http://localhost:8888/general-pest-removal';
 
 // Static pages
 $static = [

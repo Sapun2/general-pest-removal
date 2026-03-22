@@ -8,6 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (empty($_SESSION['admin_logged_in'])) {
-    header('Location: /sydney-pest-removal/admin/login');
+    header('Location: /general-pest-removal/admin/login');
     exit;
 }

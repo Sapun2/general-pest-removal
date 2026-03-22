@@ -95,18 +95,18 @@ require_once BASE_DIR . '/admin/sidebar.php';
         </div>
         <div class="flex items-center gap-3">
             <?php if ($stats['bookings_new'] > 0): ?>
-            <a href="/sydney-pest-removal/admin/bookings?status=new"
+            <a href="/general-pest-removal/admin/bookings?status=new"
                class="inline-flex items-center gap-2 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/20 text-xs font-bold px-3.5 py-2 rounded-lg transition">
                 <span class="w-2 h-2 rounded-full bg-accent inline-block"></span>
                 <?= $stats['bookings_new'] ?> new <?= $stats['bookings_new'] === 1 ? 'booking' : 'bookings' ?>
             </a>
             <?php endif; ?>
-            <a href="/sydney-pest-removal/admin/blogs/edit"
+            <a href="/general-pest-removal/admin/blogs/edit"
                class="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-primary text-gray-700 hover:text-primary text-xs font-semibold px-3.5 py-2 rounded-lg transition">
                 <i class="fa-solid fa-plus text-[10px]" aria-hidden="true"></i>
                 New Post
             </a>
-            <a href="/sydney-pest-removal/" target="_blank"
+            <a href="/general-pest-removal/" target="_blank"
                class="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-primary text-gray-500 hover:text-primary text-xs font-semibold px-3.5 py-2 rounded-lg transition">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]" aria-hidden="true"></i>
                 View Site
@@ -133,7 +133,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
         <div class="grid grid-cols-2 xl:grid-cols-5 gap-4">
 
             <!-- New Bookings — highlighted -->
-            <a href="/sydney-pest-removal/admin/bookings?status=new"
+            <a href="/general-pest-removal/admin/bookings?status=new"
                class="col-span-1 bg-white border border-gray-200 hover:border-accent/40 rounded-2xl p-5 flex items-start gap-4 transition hover:shadow-md group">
                 <div class="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition">
                     <i class="fa-solid fa-bell text-accent" aria-hidden="true"></i>
@@ -146,7 +146,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             </a>
 
             <!-- Total Bookings -->
-            <a href="/sydney-pest-removal/admin/bookings"
+            <a href="/general-pest-removal/admin/bookings"
                class="bg-white border border-gray-200 hover:border-primary/40 rounded-2xl p-5 flex items-start gap-4 transition hover:shadow-md group">
                 <div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition">
                     <i class="fa-solid fa-calendar-check text-primary" aria-hidden="true"></i>
@@ -159,7 +159,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             </a>
 
             <!-- Unread Messages -->
-            <a href="/sydney-pest-removal/admin/contacts"
+            <a href="/general-pest-removal/admin/contacts"
                class="bg-white border border-gray-200 hover:border-secondary/40 rounded-2xl p-5 flex items-start gap-4 transition hover:shadow-md group">
                 <div class="w-11 h-11 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition">
                     <i class="fa-solid fa-envelope text-secondary" aria-hidden="true"></i>
@@ -172,7 +172,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             </a>
 
             <!-- Active Services -->
-            <a href="/sydney-pest-removal/admin/services"
+            <a href="/general-pest-removal/admin/services"
                class="bg-white border border-gray-200 hover:border-blue-400/40 rounded-2xl p-5 flex items-start gap-4 transition hover:shadow-md group">
                 <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-100 transition">
                     <i class="fa-solid fa-shield-bug text-blue-600" aria-hidden="true"></i>
@@ -185,7 +185,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             </a>
 
             <!-- Published Posts -->
-            <a href="/sydney-pest-removal/admin/blogs"
+            <a href="/general-pest-removal/admin/blogs"
                class="bg-white border border-gray-200 hover:border-gray-400/40 rounded-2xl p-5 flex items-start gap-4 transition hover:shadow-md group">
                 <div class="w-11 h-11 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-gray-200 transition">
                     <i class="fa-solid fa-newspaper text-gray-600" aria-hidden="true"></i>
@@ -204,7 +204,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
             <?php
             $actions = [
                 [
-                    'href'    => '/sydney-pest-removal/admin/bookings',
+                    'href'    => '/general-pest-removal/admin/bookings',
                     'icon'    => 'fa-calendar-check',
                     'icon_bg' => 'bg-primary/10',
                     'icon_cl' => 'text-primary',
@@ -212,7 +212,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     'sub'     => 'View &amp; update leads',
                 ],
                 [
-                    'href'    => '/sydney-pest-removal/admin/services',
+                    'href'    => '/general-pest-removal/admin/services',
                     'icon'    => 'fa-shield-bug',
                     'icon_bg' => 'bg-blue-50',
                     'icon_cl' => 'text-blue-600',
@@ -220,7 +220,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     'sub'     => 'Edit service offerings',
                 ],
                 [
-                    'href'    => '/sydney-pest-removal/admin/seo',
+                    'href'    => '/general-pest-removal/admin/seo',
                     'icon'    => 'fa-magnifying-glass',
                     'icon_bg' => 'bg-secondary/10',
                     'icon_cl' => 'text-secondary',
@@ -228,7 +228,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     'sub'     => 'Meta titles &amp; descriptions',
                 ],
                 [
-                    'href'    => '/sydney-pest-removal/admin/blogs/edit',
+                    'href'    => '/general-pest-removal/admin/blogs/edit',
                     'icon'    => 'fa-pen-to-square',
                     'icon_bg' => 'bg-accent/10',
                     'icon_cl' => 'text-accent',
@@ -265,7 +265,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                         </span>
                         <?php endif; ?>
                     </div>
-                    <a href="/sydney-pest-removal/admin/bookings"
+                    <a href="/general-pest-removal/admin/bookings"
                        class="text-xs text-primary hover:text-blue-800 font-semibold transition flex items-center gap-1">
                         View all
                         <i class="fa-solid fa-arrow-right text-[10px]" aria-hidden="true"></i>
@@ -279,7 +279,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     </div>
                     <p class="text-sm font-semibold text-gray-700 mb-1">No bookings yet</p>
                     <p class="text-xs text-gray-400 mb-4">New leads will appear here when customers fill out the booking form.</p>
-                    <a href="/sydney-pest-removal/" target="_blank"
+                    <a href="/general-pest-removal/" target="_blank"
                        class="text-xs font-semibold text-primary hover:text-blue-800 transition">
                         View booking form on site
                     </a>
@@ -326,7 +326,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                                     <p class="text-xs text-gray-400"><?= date('g:i a', strtotime($b['created_at'])) ?></p>
                                 </td>
                                 <td class="px-4 py-3.5 text-right">
-                                    <a href="/sydney-pest-removal/admin/bookings?view=<?= $b['id'] ?>"
+                                    <a href="/general-pest-removal/admin/bookings?view=<?= $b['id'] ?>"
                                        class="text-xs font-semibold text-primary hover:text-blue-800 transition whitespace-nowrap">
                                         Open
                                     </a>
@@ -353,7 +353,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                             </span>
                             <?php endif; ?>
                         </div>
-                        <a href="/sydney-pest-removal/admin/contacts"
+                        <a href="/general-pest-removal/admin/contacts"
                            class="text-xs text-primary hover:text-blue-800 font-semibold transition flex items-center gap-1">
                             View all
                             <i class="fa-solid fa-arrow-right text-[10px]" aria-hidden="true"></i>
@@ -369,7 +369,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                     <ul class="divide-y divide-gray-50">
                         <?php foreach ($recent_contacts as $c): ?>
                         <li>
-                            <a href="/sydney-pest-removal/admin/contacts?view=<?= $c['id'] ?>"
+                            <a href="/general-pest-removal/admin/contacts?view=<?= $c['id'] ?>"
                                class="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 transition">
                                 <div class="w-7 h-7 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                                     <span class="text-secondary font-bold text-[10px]">
@@ -447,7 +447,7 @@ require_once BASE_DIR . '/admin/sidebar.php';
                             <p class="text-xs text-gray-400 mt-0.5">Logo, phone, hours, socials</p>
                         </div>
                     </div>
-                    <a href="/sydney-pest-removal/admin/config"
+                    <a href="/general-pest-removal/admin/config"
                        class="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition">
                         <i class="fa-solid fa-sliders text-[11px]" aria-hidden="true"></i>
                         Configure Site
