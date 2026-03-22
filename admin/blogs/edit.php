@@ -58,7 +58,10 @@ function handle_image_upload(string $field_name, string $upload_dir, string &$er
 
 // Handle save
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
+    error_log('[BLOG_EDIT] POST received. id=' . ($_GET['id'] ?? 'none') . ' is_edit=' . ($is_edit ? 'yes' : 'no'));
+
     if (($_POST['csrf_token'] ?? '') !== $_SESSION['csrf_token']) {
+        error_log('[BLOG_EDIT] CSRF mismatch – redirecting');
         $_SESSION['flash_error'] = 'Invalid request.';
         header('Location: /admin/blogs'); exit;
     }
@@ -68,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     // Handle file uploads — overrides text field if a file was selected
     $fi_err = '';
     $featured_image_upload = handle_image_upload('featured_image_file', $upload_dir, $fi_err);
+    error_log('[BLOG_EDIT] featured_image_upload=' . var_export($featured_image_upload, true) . ' fi_err=' . var_export($fi_err, true));
     $og_err = '';
     $og_image_upload       = handle_image_upload('og_image_file',       $upload_dir, $og_err);
     // Non-fatal: upload warning shown alongside save result
@@ -86,11 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
         'author'           => trim(strip_tags($_POST['author']           ?? 'General Pest Removal Team')),
         'is_published'     => isset($_POST['is_published']) ? 1 : 0,
     ];
+    error_log('[BLOG_EDIT] data[featured_image]=' . $data['featured_image'] . ' slug=' . $data['slug'] . ' title_len=' . strlen($data['title']));
 
     if (empty($data['slug']) || empty($data['title'])) {
         $error = "Slug and Title are required.";
+        error_log('[BLOG_EDIT] Validation failed: slug=' . var_export($data['slug'], true) . ' title=' . var_export($data['title'], true));
     } else {
         try {
+            error_log('[BLOG_EDIT] is_edit=' . ($is_edit ? 'true' : 'false') . ' post_id=' . ($post['id'] ?? 'null'));
             if ($is_edit && $post) {
                 $sql = "UPDATE blog_posts SET slug=:slug, title=:title, excerpt=:excerpt, content=:content,
                         category=:category, featured_image=:featured_image, meta_title=:meta_title,
@@ -111,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
                     ':is_published'     => $data['is_published'],
                     ':id'               => $post['id'],
                 ]);
+                error_log('[BLOG_EDIT] UPDATE executed. rows=' . $stmt->rowCount() . ' featured_image=' . $data['featured_image']);
                 $success = "Post updated successfully.";
                 // Reload post
                 $stmt2 = $pdo->prepare("SELECT * FROM blog_posts WHERE id = ? LIMIT 1");
