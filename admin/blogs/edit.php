@@ -9,10 +9,11 @@ $admin_title = 'Blog Post';
 
 if (empty($_SESSION['csrf_token'])) $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
-$post     = null;
-$is_edit  = false;
-$success  = '';
-$error    = '';
+$post        = null;
+$is_edit     = false;
+$success     = '';
+$error       = '';
+$upload_warn = '';
 
 // Load existing post if editing
 if (isset($_GET['id']) && $pdo) {
@@ -25,18 +26,33 @@ if (isset($_GET['id']) && $pdo) {
 }
 
 // ── Image upload helper ──────────────────────────────────
-function handle_image_upload(string $field_name, string $upload_dir): string
+function handle_image_upload(string $field_name, string $upload_dir, string &$err = ''): string
 {
     if (empty($_FILES[$field_name]['tmp_name'])) return '';
-    $file     = $_FILES[$field_name];
-    $ext      = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed  = ['jpg','jpeg','png','webp','gif'];
-    if (!in_array($ext, $allowed, true))       return '';
-    if ($file['size'] > 5 * 1024 * 1024)       return ''; // 5 MB max
-    if ($file['error'] !== UPLOAD_ERR_OK)       return '';
+    $file = $_FILES[$field_name];
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        $err = 'Upload failed (error code ' . $file['error'] . '). Max file size is 2 MB.';
+        return '';
+    }
+    $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $allowed = ['jpg','jpeg','png','webp','gif'];
+    if (!in_array($ext, $allowed, true)) {
+        $err = 'Invalid file type. Allowed: JPG, PNG, WebP, GIF.';
+        return '';
+    }
+    if ($file['size'] > 5 * 1024 * 1024) {
+        $err = 'File too large. Maximum is 5 MB.';
+        return '';
+    }
+    if (!is_dir($upload_dir)) {
+        @mkdir($upload_dir, 0755, true);
+    }
     $filename = uniqid('img_', true) . '.' . $ext;
     $dest     = $upload_dir . '/' . $filename;
-    if (!move_uploaded_file($file['tmp_name'], $dest)) return '';
+    if (!move_uploaded_file($file['tmp_name'], $dest)) {
+        $err = 'Could not save the uploaded file. Check directory permissions.';
+        return '';
+    }
     return '/assets/images/uploads/' . $filename;
 }
 
@@ -50,8 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     $upload_dir = BASE_DIR . '/assets/images/uploads';
 
     // Handle file uploads — overrides text field if a file was selected
-    $featured_image_upload = handle_image_upload('featured_image_file', $upload_dir);
-    $og_image_upload       = handle_image_upload('og_image_file',       $upload_dir);
+    $fi_err = '';
+    $featured_image_upload = handle_image_upload('featured_image_file', $upload_dir, $fi_err);
+    $og_err = '';
+    $og_image_upload       = handle_image_upload('og_image_file',       $upload_dir, $og_err);
+    // Non-fatal: upload warning shown alongside save result
+    $upload_warn = $fi_err ?: $og_err;
 
     $data = [
         'slug'             => preg_replace('/[^a-z0-9-]/', '', strtolower(trim(str_replace(' ', '-', $_POST['slug'] ?? '')))),
@@ -153,6 +173,11 @@ require_once BASE_DIR . '/admin/sidebar.php';
         <?php if ($success): ?>
         <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
             <i class="fa-solid fa-check-circle"></i> <?= htmlspecialchars($success) ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($upload_warn)): ?>
+        <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation"></i> Image not saved: <?= htmlspecialchars($upload_warn) ?>
         </div>
         <?php endif; ?>
         <?php if ($error): ?>

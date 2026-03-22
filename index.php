@@ -1,7 +1,8 @@
 <?php
 // Base folder for local dev. Change to: $base_path = ''; when going live on a domain.
 define('BASE_DIR', __DIR__);
-$base_path = '/general-pest-removal';
+// Auto-detect base path: /general-pest-removal locally under MAMP, empty on production
+$base_path = (strpos($_SERVER['REQUEST_URI'] ?? '/', '/general-pest-removal') === 0) ? '/general-pest-removal' : '';
 
 // Strip base path from URI
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -61,7 +62,7 @@ if (preg_match('#^/admin(/.*)?$#', $path, $matches)) {
             break;
         case '/blog-edit':
             // Legacy redirect for backwards compatibility
-            header('Location: /general-pest-removal/admin/blogs/edit' . ($_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : ''));
+            header('Location: /admin/blogs/edit' . ($_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : ''));
             exit;
         case '/bookings':
             require 'admin/bookings/index.php';
