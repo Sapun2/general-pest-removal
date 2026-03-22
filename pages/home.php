@@ -13,6 +13,29 @@ unset($_SESSION['flash_error'], $_SESSION['form_data']);
 
 $selected_service = htmlspecialchars(trim($_GET['service'] ?? $form_data['pest_type'] ?? ''), ENT_QUOTES, 'UTF-8');
 
+// Load services from DB (same query as services.php)
+$home_services = [];
+if (isset($pdo) && $pdo) {
+    try {
+        $stmt = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC, id ASC LIMIT 6");
+        $home_services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($home_services as &$svc) {
+            $svc['features'] = json_decode($svc['features'] ?? '[]', true) ?: [];
+        }
+        unset($svc);
+    } catch (PDOException $e) {
+        $home_services = [];
+    }
+}
+if (empty($home_services)) {
+    $home_services = [
+        ['id'=>1,'slug'=>'termites',    'name'=>'Termite Inspection & Treatment','tagline'=>'AS 3660.2-compliant thermal imaging inspections and chemical barrier treatments.','icon'=>'fa-house-crack','badge_text'=>'Most Requested','image_path'=>'/assets/images/2.png','features'=>[['title'=>'AS 3660.2 Australian Standard compliant'],['title'=>'Same-day emergency service'],['title'=>'Written treatment report on every job']]],
+        ['id'=>2,'slug'=>'cockroaches', 'name'=>'Cockroach Control','tagline'=>'IPM-based gel baiting eliminates the entire colony at the source — safe for family homes.','icon'=>'fa-bug','badge_text'=>'Year-Round','image_path'=>'/assets/images/3.png','features'=>[['title'=>'Targets eggs and the colony queen'],['title'=>'Safe for food-preparation environments'],['title'=>'Commercial contracts available']]],
+        ['id'=>3,'slug'=>'spiders',     'name'=>'Spider & Ant Removal','tagline'=>'Redback, Funnel-web, and common spider removal plus targeted ant treatments.','icon'=>'fa-spider','badge_text'=>'Family Safe','image_path'=>'/assets/images/4.png','features'=>[['title'=>'Redback & Funnel-web specialists'],['title'=>'Pet and child-safe treatments'],['title'=>'Fire Ant biosecurity compliant']]],
+    ];
+}
+$home_guarantee_map = ['30-Day Protection','6-Month Protection','3-Month Protection','90-Day Protection','6-Month Protection','12-Month Protection'];
+
 $page_seo = get_page_seo('home', [
     'title'          => 'Top Rated Pest Control in Sydney & Brisbane | General Pest Removal',
     'description'    => 'Expert pest control in Sydney, Brisbane, Parramatta, Inner West, North Shore & surrounds. Termite inspections, rodent exclusion, cockroach control. Licensed & insured. Book online today.',
@@ -267,77 +290,68 @@ require_once BASE_DIR . '/includes/header.php';
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php
-            $services = [
-                [
-                    'img'       => '/assets/images/2.png',
-                    'alt'       => 'Termite inspection Sydney & Brisbane',
-                    'badge'     => 'Most Requested',
-                    'title'     => 'Termite Inspection &amp; Treatment',
-                    'desc'      => 'AS 3660.2-compliant thermal imaging inspections and chemical barrier treatments — complete termite eradication with written service report.',
-                    'features'  => ['AS 3660.2 Australian Standard compliant', 'Same-day emergency service', 'Written treatment report on every job'],
-                    'guarantee' => '12-Month Protection',
-                    'book_href' => '/booking?service=termites',
-                    'info_href' => '/services#termites',
-                ],
-                [
-                    'img'       => '/assets/images/3.png',
-                    'alt'       => 'Cockroach control Sydney & Brisbane',
-                    'badge'     => 'Year-Round',
-                    'title'     => 'Cockroach Control',
-                    'desc'      => 'IPM-based gel baiting eliminates the entire colony at the source — safe for kitchens, restaurants, and family homes.',
-                    'features'  => ['Targets eggs and the colony queen', 'Safe for food-preparation environments', 'Commercial contracts available'],
-                    'guarantee' => '6-Month Protection',
-                    'book_href' => '/booking?service=cockroaches',
-                    'info_href' => '/services#cockroaches',
-                ],
-                [
-                    'img'       => '/assets/images/4.png',
-                    'alt'       => 'Spider and ant removal Sydney & Brisbane',
-                    'badge'     => 'Residential &amp; Commercial',
-                    'title'     => 'Spider &amp; Ant Removal',
-                    'desc'      => 'Redback, Funnel-web, and common spider removal plus targeted ant treatments — protecting your family year-round.',
-                    'features'  => ['Redback &amp; Funnel-web specialists', 'Pet and child-safe treatments', 'Fire Ant biosecurity compliant'],
-                    'guarantee' => '3-Month Protection',
-                    'book_href' => '/booking?service=spiders',
-                    'info_href' => '/services#spiders',
-                ],
-            ];
-            foreach ($services as $s): ?>
+            <?php foreach ($home_services as $idx => $svc):
+                $slug      = htmlspecialchars($svc['slug'] ?? '');
+                $icon      = htmlspecialchars($svc['icon'] ?? 'fa-bug');
+                $badge     = $svc['badge_text'] ?? '';
+                $guarantee = $home_guarantee_map[$idx] ?? '30-Day Protection';
+                $features  = array_slice($svc['features'] ?? [], 0, 3);
+                $has_image = !empty($svc['image_path']);
+            ?>
             <article class="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300">
-                <div class="relative aspect-[16/9] overflow-hidden">
-                    <img src="<?= $base_url . $s['img'] ?>"
-                         alt="<?= $s['alt'] ?>"
+
+                <!-- Image / Icon header -->
+                <?php if ($has_image): ?>
+                <div class="relative aspect-[16/9] overflow-hidden flex-shrink-0">
+                    <img src="<?= $base_url . htmlspecialchars($svc['image_path']) ?>"
+                         alt="<?= htmlspecialchars($svc['name']) ?>"
                          class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500"
                          loading="lazy">
-                    <span class="absolute top-3 left-3 bg-white/90 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm">
-                        <?= $s['badge'] ?>
+                    <?php if ($badge): ?>
+                    <span class="absolute top-3 left-3 bg-slate-900/70 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                        <?= htmlspecialchars($badge) ?>
                     </span>
+                    <?php endif; ?>
                 </div>
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-slate-900 mb-2"><?= $s['title'] ?></h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4"><?= $s['desc'] ?></p>
+                <?php else: ?>
+                <div class="aspect-[16/9] bg-green-50 border-b border-slate-100 flex flex-col items-center justify-center gap-3 flex-shrink-0 relative">
+                    <i class="fa-solid <?= $icon ?> text-green-500 text-4xl" aria-hidden="true"></i>
+                    <?php if ($badge): ?>
+                    <span class="absolute top-3 left-3 bg-slate-900/70 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                        <?= htmlspecialchars($badge) ?>
+                    </span>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
 
-                    <ul class="space-y-1.5 mb-5" role="list">
-                        <?php foreach ($s['features'] as $f): ?>
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-base font-bold text-slate-900 mb-2"><?= htmlspecialchars($svc['name']) ?></h3>
+                    <?php if (!empty($svc['tagline'])): ?>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4"><?= htmlspecialchars($svc['tagline']) ?></p>
+                    <?php endif; ?>
+
+                    <?php if (!empty($features)): ?>
+                    <ul class="space-y-1.5 mb-5 flex-grow" role="list">
+                        <?php foreach ($features as $feat): ?>
                         <li class="flex items-start gap-2 text-xs text-slate-600">
                             <i class="fa-solid fa-check text-green-600 mt-0.5 flex-shrink-0 text-[10px]" aria-hidden="true"></i>
-                            <?= $f ?>
+                            <?= htmlspecialchars($feat['title']) ?>
                         </li>
                         <?php endforeach; ?>
                     </ul>
+                    <?php endif; ?>
 
                     <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
                         <span class="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-50 border border-green-100 px-2.5 py-1 rounded-full flex-shrink-0">
                             <i class="fa-solid fa-shield-halved text-[10px]" aria-hidden="true"></i>
-                            <?= $s['guarantee'] ?>
+                            <?= $guarantee ?>
                         </span>
                         <div class="flex items-center gap-2">
-                            <a href="<?= $base_url . $s['info_href'] ?>"
+                            <a href="<?= $base_url ?>/services#<?= $slug ?>"
                                class="text-xs font-medium text-slate-400 hover:text-slate-600 transition px-2 py-1">
                                 Details
                             </a>
-                            <a href="<?= $base_url . $s['book_href'] ?>"
+                            <a href="<?= $base_url ?>/booking?service=<?= $slug ?>"
                                class="inline-flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">
                                 <i class="fa-regular fa-calendar-check text-[10px]" aria-hidden="true"></i>
                                 Book
