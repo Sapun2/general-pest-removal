@@ -92,6 +92,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
                 save_keys($pdo, ['smtp_host','smtp_port','smtp_user','smtp_pass','smtp_encryption','smtp_from_name','smtp_from_email'], $_POST);
                 break;
 
+            case 'favicon':
+                if (!empty($_FILES['favicon_file']['tmp_name']) && $_FILES['favicon_file']['error'] === UPLOAD_ERR_OK) {
+                    $file    = $_FILES['favicon_file'];
+                    $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                    $allowed = ['ico','png','svg','jpg','jpeg','webp'];
+                    if (in_array($ext, $allowed, true) && $file['size'] <= 512 * 1024) {
+                        $upload_dir = BASE_DIR . '/assets/images/uploads';
+                        if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
+                        $filename = 'favicon_' . time() . '.' . $ext;
+                        if (move_uploaded_file($file['tmp_name'], $upload_dir . '/' . $filename)) {
+                            $_POST['favicon_url'] = '/assets/images/uploads/' . $filename;
+                        }
+                    }
+                }
+                save_keys($pdo, ['favicon_url'], $_POST, ['favicon_url']);
+                break;
+
             case 'tracking':
                 save_keys($pdo, ['gtm_id','ga4_id','gads_id','gads_label','meta_pixel_id','gsc_verification'], $_POST);
                 break;
@@ -104,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
         $section_labels = [
             'business' => 'Business Information',
             'logo'     => 'Logo',
+            'favicon'  => 'Favicon',
             'phones'   => 'Phone Numbers',
             'contact'  => 'Contact & Hours',
             'social'   => 'Social Media',
@@ -329,6 +347,85 @@ require_once BASE_DIR . '/admin/sidebar.php';
             <div class="flex justify-end">
                 <button type="submit" class="bg-primary hover:bg-blue-900 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition flex items-center gap-2">
                     <i class="fa-solid fa-floppy-disk"></i> Save
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SECTION: Favicon                                           -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6" id="favicon">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-yellow-50 border border-yellow-200 flex items-center justify-center">
+                <i class="fa-solid fa-image text-yellow-600 text-sm"></i>
+            </div>
+            <div>
+                <h2 class="font-bold text-gray-900">Favicon</h2>
+                <p class="text-xs text-gray-400 mt-0.5">The small icon shown in browser tabs and search results.</p>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data" class="p-6 space-y-5">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+            <input type="hidden" name="_section" value="favicon">
+
+            <?php $favicon_url = $c('favicon_url'); ?>
+
+            <!-- Current favicon preview -->
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden" id="favicon-preview-box">
+                    <?php if ($favicon_url): ?>
+                    <img src="<?= htmlspecialchars($favicon_url) ?>" alt="Current favicon" class="w-10 h-10 object-contain" id="favicon-preview-img">
+                    <?php else: ?>
+                    <i class="fa-solid fa-image text-gray-300 text-2xl" id="favicon-preview-placeholder"></i>
+                    <img src="" alt="" class="w-10 h-10 object-contain hidden" id="favicon-preview-img">
+                    <?php endif; ?>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-700">Current Favicon</p>
+                    <p class="text-xs text-gray-400 mt-0.5"><?= $favicon_url ? htmlspecialchars($favicon_url) : 'None set — browser shows default' ?></p>
+                </div>
+            </div>
+
+            <!-- File upload -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Upload Favicon</label>
+                <label class="flex items-center gap-3 cursor-pointer w-fit bg-white hover:bg-gray-50 border border-dashed border-gray-300 hover:border-primary px-5 py-3 rounded-xl transition group">
+                    <div class="w-9 h-9 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition">
+                        <i class="fa-solid fa-arrow-up-from-bracket text-primary text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-700 group-hover:text-primary transition">Choose file to upload</p>
+                        <p class="text-xs text-gray-400 mt-0.5">ICO, PNG, SVG, WebP &middot; Max 512 KB &middot; Recommended: 32×32 or 64×64</p>
+                    </div>
+                    <input type="file" name="favicon_file" id="favicon-file-input" accept=".ico,.png,.svg,.jpg,.jpeg,.webp,image/*" class="hidden" onchange="previewFaviconUpload(this)">
+                </label>
+                <div id="favicon-upload-preview-wrap" class="hidden mt-3 flex items-center gap-3 bg-yellow-50 border border-green-200 rounded-xl px-4 py-3">
+                    <img id="favicon-upload-preview-img" src="" alt="" class="w-8 h-8 object-contain">
+                    <div class="flex-grow min-w-0">
+                        <p id="favicon-upload-filename" class="text-xs font-semibold text-gray-700 truncate"></p>
+                        <p class="text-xs text-green-600 mt-0.5">Ready to upload — click Save below</p>
+                    </div>
+                    <button type="button" onclick="clearFaviconUpload()" class="text-gray-400 hover:text-red-500 transition text-sm">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Manual URL -->
+            <div class="border-t border-gray-100 pt-4">
+                <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1.5">Or Enter URL Directly</label>
+                <input type="text" name="favicon_url" id="favicon-url-input"
+                       value="<?= htmlspecialchars($favicon_url) ?>"
+                       placeholder="/assets/images/favicon.ico or https://..."
+                       class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none text-sm transition font-mono"
+                       oninput="updateFaviconPreview(this.value)">
+                <p class="text-xs text-gray-400 mt-1">File upload above takes precedence. Use .ico for best browser compatibility.</p>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-primary hover:bg-blue-900 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition flex items-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Favicon
                 </button>
             </div>
         </form>
@@ -801,6 +898,39 @@ function clearLogoUpload() {
     document.getElementById('logo-file-input').value = '';
     document.getElementById('logo-upload-preview-wrap').classList.add('hidden');
     document.getElementById('logo-upload-preview-img').src = '';
+}
+
+// ── Favicon upload preview ───────────────────────────────────────
+function previewFaviconUpload(input) {
+    var file = input.files[0];
+    if (!file) return;
+    var wrap = document.getElementById('favicon-upload-preview-wrap');
+    var img  = document.getElementById('favicon-upload-preview-img');
+    document.getElementById('favicon-upload-filename').textContent = file.name;
+    img.src = URL.createObjectURL(file);
+    wrap.classList.remove('hidden');
+    // Also update the main preview
+    document.getElementById('favicon-preview-img').src = img.src;
+    document.getElementById('favicon-preview-img').classList.remove('hidden');
+    var ph = document.getElementById('favicon-preview-placeholder');
+    if (ph) ph.classList.add('hidden');
+}
+function clearFaviconUpload() {
+    document.getElementById('favicon-file-input').value = '';
+    document.getElementById('favicon-upload-preview-wrap').classList.add('hidden');
+    document.getElementById('favicon-upload-preview-img').src = '';
+}
+function updateFaviconPreview(url) {
+    var img = document.getElementById('favicon-preview-img');
+    var ph  = document.getElementById('favicon-preview-placeholder');
+    if (url) {
+        img.src = url;
+        img.classList.remove('hidden');
+        if (ph) ph.classList.add('hidden');
+    } else {
+        img.classList.add('hidden');
+        if (ph) ph.classList.remove('hidden');
+    }
 }
 
 // ── SMTP password toggle ─────────────────────────────────────────

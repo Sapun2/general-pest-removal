@@ -46,12 +46,14 @@ function load_site_config(): array
         'smtp_from_name'       => '',
         'smtp_from_email'      => '',
         // Tracking codes
-        'gtm_id'               => '',      // GTM-XXXXXXX
-        'ga4_id'               => '',      // G-XXXXXXXXXX
-        'gads_id'              => '',      // AW-XXXXXXXXXX
-        'gads_label'           => '',      // conversion label
-        'meta_pixel_id'        => '',      // numeric ID
-        'gsc_verification'     => '',      // Google Search Console meta content value
+        'gtm_id'               => '',                                          // GTM-XXXXXXX
+        'ga4_id'               => 'G-6YMW4157K6',                            // G-XXXXXXXXXX
+        'gads_id'              => '',                                          // AW-XXXXXXXXXX
+        'gads_label'           => '',                                          // conversion label
+        'meta_pixel_id'        => '',                                          // numeric ID
+        'gsc_verification'     => 'h6olIfeEgZH2n7qmhlCNbDGxWGnKn208mjrd9G17IcY', // Google Search Console
+        // Favicon
+        'favicon_url'          => '',                                          // /assets/images/favicon.ico
     ];
 
     if (!$pdo) {

@@ -116,6 +116,12 @@ require_once BASE_DIR . '/admin/sidebar.php';
                 <?php endif; ?>
             </a>
             <?php endforeach; ?>
+            <div class="pt-3 mt-1 border-t border-gray-200 px-1">
+                <p class="text-xs text-gray-400 leading-relaxed flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-secondary flex-shrink-0 inline-block"></span>
+                    Custom SEO saved
+                </p>
+            </div>
         </nav>
 
         <!-- Editor -->

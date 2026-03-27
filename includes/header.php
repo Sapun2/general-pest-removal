@@ -50,14 +50,16 @@ if ($seo_breadcrumbs) {
 
 $request_uri = $_SERVER['REQUEST_URI'];
 
-function isActive($path, $uri) {
-    if ($path === '/' && ($uri === '/general-pest-removal/' || $uri === '/general-pest-removal' || $uri === '/general-pest-removal/index.php')) {
-        return true;
+function isActive(string $path, string $uri): bool {
+    $base  = rtrim(defined('SITE_BASE_PATH') ? SITE_BASE_PATH : '', '/');
+    $clean = rtrim(strtok($uri, '?') ?: '/', '/');
+    if ($path === '/') {
+        // Match domain root (production: '') or MAMP subdir (e.g. '/general-pest-removal')
+        return $clean === $base || $clean === '';
     }
-    if ($path !== '/' && strpos($uri, $path) !== false) {
-        return true;
-    }
-    return false;
+    $target = $base . $path;
+    // Exact match or matches as a path prefix (e.g. /services/termites → /services active)
+    return $clean === $target || strpos($clean, $target . '/') === 0;
 }
 ?>
 <!DOCTYPE html>
@@ -116,6 +118,13 @@ function isActive($path, $uri) {
     <?php if (!empty($_sc['meta_pixel_id'])): ?>
     <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','<?= htmlspecialchars($_sc['meta_pixel_id']) ?>');fbq('track','PageView');</script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?= htmlspecialchars($_sc['meta_pixel_id']) ?>&ev=PageView&noscript=1" alt=""></noscript>
+    <?php endif; ?>
+
+    <?php if (!empty($_sc['favicon_url'])): ?>
+    <?php $fav_url = preg_match('#^https?://#', $_sc['favicon_url']) ? $_sc['favicon_url'] : $base_url . $_sc['favicon_url']; ?>
+    <link rel="icon" href="<?= htmlspecialchars($fav_url) ?>">
+    <link rel="shortcut icon" href="<?= htmlspecialchars($fav_url) ?>">
+    <link rel="apple-touch-icon" href="<?= htmlspecialchars($fav_url) ?>">
     <?php endif; ?>
 
     <!-- Inter Font -->
