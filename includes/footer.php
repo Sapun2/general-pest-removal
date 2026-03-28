@@ -160,5 +160,45 @@ $_active_socials = array_filter($_socials, fn($s) => !empty($s['url']));
 
     </div>
 </footer>
+
+<!-- General Pest Removal CRM Integration -->
+<script>
+(function() {
+  var API_KEY = 'crm_af1b0fe74ce8f8a388d8eeba6934707a3f610532';
+  var API_URL = 'https://nepalitechsupport.tech';
+
+  // Submit a booking
+  window.crmBooking = function(data, callback) {
+    fetch(API_URL + '/api/booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-API-Key': API_KEY },
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); }).then(callback).catch(callback);
+  };
+
+  // Submit a contact form
+  window.crmContact = function(data, callback) {
+    fetch(API_URL + '/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-API-Key': API_KEY },
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); }).then(callback).catch(callback);
+  };
+
+  // Auto-wire any form with data-crm="booking" or data-crm="contact"
+  // Fires CRM call in background; normal PHP form submission continues uninterrupted
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('form[data-crm]').forEach(function(form) {
+      form.addEventListener('submit', function() {
+        var type = form.dataset.crm;
+        var data = {};
+        new FormData(form).forEach(function(v, k) { data[k] = v; });
+        var fn = type === 'booking' ? window.crmBooking : window.crmContact;
+        fn(data, function() {});
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -154,7 +154,7 @@ require_once BASE_DIR . '/includes/header.php';
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?= $base_url ?>/process_contact" method="POST" class="space-y-5" novalidate>
+                        <form action="<?= $base_url ?>/process_contact" method="POST" class="space-y-5" novalidate data-crm="contact">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                             <div class="grid sm:grid-cols-2 gap-5">

@@ -157,7 +157,7 @@ require_once BASE_DIR . '/includes/header.php';
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?= $base_url ?>/process_booking" method="POST" class="space-y-4" novalidate id="hero-form">
+                        <form action="<?= $base_url ?>/process_booking" method="POST" class="space-y-4" novalidate id="hero-form" data-crm="booking">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                             <!-- Name row -->

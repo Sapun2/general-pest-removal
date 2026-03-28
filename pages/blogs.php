@@ -114,7 +114,7 @@ require_once BASE_DIR . '/includes/header.php';
                     </div>
                     <?php endif; ?>
 
-                    <form action="<?= $base_url ?>/process_booking" method="POST" class="space-y-3" novalidate>
+                    <form action="<?= $base_url ?>/process_booking" method="POST" class="space-y-3" novalidate data-crm="booking">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
                         <div class="grid grid-cols-2 gap-3">
                             <input type="text" name="first_name" required placeholder="First Name *"
