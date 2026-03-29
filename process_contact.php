@@ -1,8 +1,10 @@
 <?php
 /**
  * Contact Form Handler
- * POST → validates → saves to DB → sends emails → redirects to /contact
+ * POST → validates → saves to DB → sends emails → redirects to /thank-you
  */
+if (session_status() === PHP_SESSION_NONE) session_start();
+
 if (!defined('BASE_DIR')) define('BASE_DIR', __DIR__);
 require_once BASE_DIR . '/config.php';
 require_once BASE_DIR . '/includes/db.php';
@@ -18,8 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // ── CSRF ─────────────────────────────────────────────────────────
-if (session_status() === PHP_SESSION_NONE) session_start();
-
 if (
     empty($_POST['csrf_token']) ||
     empty($_SESSION['csrf_token']) ||
@@ -112,6 +112,20 @@ try {
     send_mail($email, $name, "We received your message — {$biz_name}", $cust_body);
 
     unset($_SESSION['form_data']);
+
+    // ── Server-side CRM push ─────────────────────────────────────
+    if (!defined('NTS_PUSH_LOADED2')) {
+        define('NTS_PUSH_LOADED2', 1);
+        require_once dirname(__DIR__) . '/nts-push.php';
+    }
+    nts_push_contact('crm_af1b0fe74ce8f8a388d8eeba6934707a3f610532', [
+        'name'    => $name,
+        'email'   => $email,
+        'phone'   => $phone,
+        'subject' => '',
+        'message' => $message,
+    ]);
+
     header('Location: ' . SITE_BASE_PATH . '/thank-you');
     exit;
 
