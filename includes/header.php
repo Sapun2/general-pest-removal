@@ -112,7 +112,10 @@ function isActive(string $path, string $uri): bool {
 
     <?php if (!empty($_sc['ga4_id'])): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?= htmlspecialchars($_sc['ga4_id']) ?>"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','<?= htmlspecialchars($_sc['ga4_id']) ?>');</script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','<?= htmlspecialchars($_sc['ga4_id']) ?>');<?php if (!empty($_sc['gads_id'])): ?>gtag('config','<?= htmlspecialchars($_sc['gads_id']) ?>');<?php endif; ?></script>
+    <?php elseif (!empty($_sc['gads_id'])): ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= htmlspecialchars($_sc['gads_id']) ?>"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','<?= htmlspecialchars($_sc['gads_id']) ?>');</script>
     <?php endif; ?>
 
     <?php if (!empty($_sc['meta_pixel_id'])): ?>
