@@ -11,6 +11,22 @@ $page_seo = get_page_seo('thank-you', [
 
 require_once BASE_DIR . '/includes/header.php';
 ?>
+<?php
+// ── Google Ads Conversion Event ──────────────────────────────────────────────
+// Fires on every successful form submission (booking + contact) that lands here.
+$_gads_id    = $_sc['gads_id']    ?? '';
+$_gads_label = $_sc['gads_label'] ?? '';
+if (!empty($_gads_id) && !empty($_gads_label)):
+?>
+<script>
+    (function () {
+        if (typeof gtag !== 'function') return;
+        gtag('event', 'conversion', {
+            'send_to': '<?= htmlspecialchars($_gads_id, ENT_QUOTES) ?>/<?= htmlspecialchars($_gads_label, ENT_QUOTES) ?>'
+        });
+    })();
+</script>
+<?php endif; ?>
 
 <main class="flex-grow bg-slate-50">
 

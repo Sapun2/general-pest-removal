@@ -112,8 +112,7 @@ try {
     send_mail($email, $name, "We received your message — {$biz_name}", $cust_body);
 
     unset($_SESSION['form_data']);
-    $_SESSION['flash_success'] = "Thanks, {$name}! Your message was sent. We'll get back to you within 24 hours.";
-    header('Location: ' . SITE_BASE_PATH . '/contact');
+    header('Location: ' . SITE_BASE_PATH . '/thank-you');
     exit;
 
 } catch (PDOException $e) {
